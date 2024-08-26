@@ -1,6 +1,7 @@
 package_old.json
 
 node_modules/*
+examples/todoApp/node_modules/*
 
 .idea/*
 
