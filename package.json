@@ -1,0 +1,12 @@
+{
+  "name": "@celestial_labs/celestial",
+  "version": "0.1.0",
+  "devDependencies": {
+    "@celestial_labs/codegen-openapi": "^0.0.8",
+    "@reduxjs/toolkit": "^1.4.0",
+    "minimist": "^1.2.8",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
+  },
+  "type": "module"
+}

@@ -1,0 +1,11 @@
+package_old.json
+
+node_modules/*
+
+.idea/*
+
+.DS_Store
+
+lib/*
+
+package-lock.json
