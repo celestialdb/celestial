@@ -3,15 +3,15 @@ import { createApi } from "@reduxjs/toolkit/query/react";
 import { fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 const entityAdapter = createEntityAdapter();
 const initialState: EntityState<any> = entityAdapter.getInitialState();
-export const tasksData = createApi({
-  reducerPath: "tasks",
-  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:5001" }),
-  tagTypes: ["Tasks"],
+export const petsData = createApi({
+  reducerPath: "pets",
+  baseQuery: fetchBaseQuery({ baseUrl: "https://api.example.com" }),
+  tagTypes: ["Tasks", "Test", "Colors", "Status"],
   endpoints: (build) => ({
     getTasks: build.query<EntityState<any>, GetTasksApiArg>({
       query: () => ({ url: `/tasks` }),
       providesTags: ["Tasks"],
-      transformResponse: (responseData: GetTasksApiResponse) =>
+      transformResponse: (responseData: Task[]) =>
         entityAdapter.setAll(initialState, responseData),
     }),
     postTasks: build.mutation<PostTasksApiResponse, PostTasksApiArg>({
@@ -20,7 +20,7 @@ export const tasksData = createApi({
         method: "POST",
         body: queryArg.newTask,
       }),
-      invalidatesTags: ["Tasks"],
+      invalidatesTags: ["Tasks", "Test"],
     }),
     putTaskColor: build.mutation<PutTaskColorApiResponse, PutTaskColorApiArg>({
       query: (queryArg) => ({
@@ -41,16 +41,24 @@ export const tasksData = createApi({
       }),
       invalidatesTags: ["Tasks"],
     }),
+    getColors: build.query<GetColorsApiResponse, GetColorsApiArg>({
+      query: () => ({ url: `/colors` }),
+      providesTags: ["Colors"],
+    }),
+    getStatus: build.query<GetStatusApiResponse, GetStatusApiArg>({
+      query: () => ({ url: `/status` }),
+      providesTags: ["Status", "Test"],
+    }),
   }),
 });
 const selectEntryResult = (state) =>
-  tasksData.endpoints.getTasks.select()(state).data;
+  petsData.endpoints.getTasks.select()(state).data;
 const entrySelectors = entityAdapter.getSelectors(
   (state) => selectEntryResult(state) ?? initialState,
 );
-export const selectTasks = entrySelectors.selectAll;
-export const selectTasksIds = entrySelectors.selectIds;
-export const selectTasksById = entrySelectors.selectById;
+export const selectPets = entrySelectors.selectAll;
+export const selectPetsIds = entrySelectors.selectIds;
+export const selectPetsById = entrySelectors.selectById;
 export type GetTasksApiResponse = /** status 200 A list of tasks */ Task[];
 export type GetTasksApiArg = void;
 export type PostTasksApiResponse =
@@ -68,6 +76,11 @@ export type PutTaskStatusApiResponse =
 export type PutTaskStatusApiArg = {
   updateTaskStatus: UpdateTaskStatus;
 };
+export type GetColorsApiResponse = /** status 200 A list of colors */ Color[];
+export type GetColorsApiArg = void;
+export type GetStatusApiResponse =
+  /** status 200 A list of statuses */ Status[];
+export type GetStatusApiArg = void;
 export type Task = {
   id?: number;
   text?: string;
@@ -89,9 +102,19 @@ export type UpdateTaskStatus = {
   task_id: number;
   status: number;
 };
+export type Color = {
+  id?: number;
+  color?: string;
+};
+export type Status = {
+  id?: number;
+  status?: string;
+};
 export const {
   useGetTasksQuery,
   usePostTasksMutation,
   usePutTaskColorMutation,
   usePutTaskStatusMutation,
-} = tasksData;
+  useGetColorsQuery,
+  useGetStatusQuery,
+} = petsData;
