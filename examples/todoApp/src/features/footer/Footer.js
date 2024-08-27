@@ -1,19 +1,14 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
-import { capitalize } from '../../dataApi/colors'
-import { selectColors } from "../../dataApi/colorsApiSlice";
+import { capitalize, StatusFilters } from '../../utils/utils'
+import { selectColors } from "../../celestial/colorsData";
+import {selectCache, updateCache} from "../../celestial/cache";
 import {
-    StatusFilters,
-    // colorFilterChanged,
-    // statusFilterChanged,
-} from '../../dataApi/filtersSlice'
-import {
-  completedTodosCleared,
-  allTodosCompleted,
-  selectTodos,
-} from '../../dataApi/tasksApiSlice'
-import {colorFilterChanged, statusFilterChanged} from "../../utils";
+  // completedTodosCleared,
+  // allTodosCompleted,
+  selectTasks,
+} from '../../celestial/tasksData'
 
 const RemainingTodos = ({ count }) => {
   const suffix = count === 1 ? '' : 's'
@@ -51,7 +46,7 @@ const StatusFilter = ({ value: status, onChange }) => {
 
 const ColorFilters = ({ value: colors, onChange }) => {
   const renderedColors = useSelector(state => selectColors(state)).map((color) => {
-    const checked = colors.includes(color.id)
+      const checked = colors.includes(color.id)
     const handleChange = () => {
       const changeType = checked ? 'removed' : 'added'
       onChange(color.id, changeType)
@@ -88,22 +83,31 @@ const Footer = () => {
   const dispatch = useDispatch()
 
   const todosRemaining = useSelector((state) => {
-    const uncompletedTodos = selectTodos(state).filter(
-      (todo) => todo.status != StatusFilters.Completed
+    const uncompletedTodos = selectTasks(state).filter(
+      (todo) => todo.status !== StatusFilters.Completed
     )
     return uncompletedTodos.length
   })
 
-  const { status, colors } = useSelector((state) => state.filters)
+  const { status, colors } = useSelector((state) => selectCache(state))
 
-  const onMarkCompletedClicked = () => dispatch(allTodosCompleted())
-  const onClearCompletedClicked = () => dispatch(completedTodosCleared())
+  const onMarkCompletedClicked = () => console.log("")// dispatch(allTodosCompleted())
+  const onClearCompletedClicked = () => console.log("") // dispatch(completedTodosCleared())
 
-  const onColorChange = (color, changeType) =>
-    dispatch(colorFilterChanged(color, changeType))
-    // dispatch({type: 'colorFilterChanged', color, changeType})
+  const onColorChange = (color, changeType) => {
+      let temp = colors
+      if (changeType === "added") {
+        temp = [...temp, color]
+      }
+      if (changeType === "removed") {
+        temp = temp.filter((existingColor) => existingColor !== color)
+      }
+      dispatch(updateCache("colors", temp))
+  }
 
-  const onStatusChange = (status) => dispatch(statusFilterChanged(status)) // dispatch({type: 'statusFilterChanged', status}) // dispatch(statusFilterChanged(status))
+  const onStatusChange = (status) => {
+    dispatch(updateCache("status", status))
+  }
 
 
   return (

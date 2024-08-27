@@ -18,7 +18,17 @@ export const tasksData = createApi({
       query: (queryArg) => ({
         url: `/tasks`,
         method: "POST",
+        headers: { 'Content-Type': 'application/json' },
         body: queryArg.newTask,
+      }),
+      invalidatesTags: ["Tasks"],
+    }),
+    deleteTask: build.mutation<DeleteTaskApiResponse, DeleteTaskApiArg>({
+      query: (queryArg) => ({
+        url: `/task`,
+        method: "DELETE",
+        headers: { 'Content-Type': 'application/json' },
+        body: queryArg.deleteTask,
       }),
       invalidatesTags: ["Tasks"],
     }),
@@ -26,6 +36,7 @@ export const tasksData = createApi({
       query: (queryArg) => ({
         url: `/task/color`,
         method: "PUT",
+        headers: { 'Content-Type': 'application/json' },
         body: queryArg.updateTaskColor,
       }),
       invalidatesTags: ["Tasks"],
@@ -37,13 +48,14 @@ export const tasksData = createApi({
       query: (queryArg) => ({
         url: `/task/status`,
         method: "PUT",
+        headers: { 'Content-Type': 'application/json' },
         body: queryArg.updateTaskStatus,
       }),
       invalidatesTags: ["Tasks"],
     }),
   }),
 });
-const selectEntryResult = (state) =>
+const selectEntryResult = (state: any) =>
   tasksData.endpoints.getTasks.select()(state).data;
 const entrySelectors = entityAdapter.getSelectors(
   (state) => selectEntryResult(state) ?? initialState,
@@ -57,6 +69,11 @@ export type PostTasksApiResponse =
   /** status 200 Task added successfully */ TaskResponse;
 export type PostTasksApiArg = {
   newTask: NewTask;
+};
+export type DeleteTaskApiResponse =
+  /** status 200 Task deleted successfully */ DeleteResponse;
+export type DeleteTaskApiArg = {
+  deleteTask: DeleteTask;
 };
 export type PutTaskColorApiResponse =
   /** status 200 Task color updated successfully */ TaskResponse;
@@ -81,6 +98,15 @@ export type TaskResponse = {
 export type NewTask = {
   text: string;
 };
+export type DeleteResponse = {
+  message?: string;
+  inserted?: {
+    id?: number;
+  };
+};
+export type DeleteTask = {
+  task_id: number;
+};
 export type UpdateTaskColor = {
   task_id: number;
   color: number;
@@ -92,6 +118,7 @@ export type UpdateTaskStatus = {
 export const {
   useGetTasksQuery,
   usePostTasksMutation,
+  useDeleteTaskMutation,
   usePutTaskColorMutation,
   usePutTaskStatusMutation,
 } = tasksData;

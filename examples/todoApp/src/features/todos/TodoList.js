@@ -2,14 +2,11 @@ import React, {useEffect} from 'react'
 import { useSelector } from 'react-redux'
 import TodoListItem from './TodoListItem'
 
-// import {selectFilteredTodoIds, selectQueries, selectTodos} from '../../dataApi/redundant/todosSlice'
-import {selectTodos, useGetTasksQuery, selectTodoIds, tasksApiSlice, selectFilteredTodoIds} from "../../dataApi/tasksApiSlice";
-import {useGetColorsQuery} from "../../dataApi/colorsApiSlice";
-import {useGetStatusQuery} from "../../dataApi/redundant/statusApiSlice";
+import {selectFilteredTodoIds} from "../../utils/selectors";
 
 const TodoList = () => {
-  // const res = useSelector((state)=>state)
-  // console.log("---- todo structure: ", res)
+  const res = useSelector((state)=>state)
+  console.log("---- state: ", res)
   //
   // const {data, error, isLoading, isError, isSuccess} = useGetTasksQuery()
   // console.log("---- data from rtk query in component2: ", data, isLoading, isError, isSuccess)
@@ -17,7 +14,7 @@ const TodoList = () => {
   // const colorstemp = useGetColorsQuery()
   // const statustemp = useGetStatusQuery()
   //
-  // let selectorTest = useSelector((state) => selectTodos(state))
+  // let selectorTest = useSelector((state) => selectFilteredTodos(state))
   // console.log("---- selector test: ", selectorTest)
   // selectorTest = useSelector((state) => selectTodoIds(state))
   // console.log("---- selector test: ", selectorTest)
@@ -26,7 +23,7 @@ const TodoList = () => {
   const todoIds = useSelector(selectFilteredTodoIds)
   // console.log("---- filtered todoIds: ", todoIds)
 
-  const loadingStatus = useGetTasksQuery().isLoading
+  const loadingStatus = false//useGetTasksQuery().isLoading
 
   if (loadingStatus) {
     return (

@@ -3,56 +3,49 @@ import { useSelector, useDispatch } from 'react-redux'
 
 import { ReactComponent as TimesSolid } from './times-solid.svg'
 
-import { capitalize } from '../../dataApi/colors'
-import {selectColorById, selectColors} from "../../dataApi/colorsApiSlice";
+import { capitalize, StatusFilters } from '../../utils/utils'
+import { selectColors, selectColorsById} from "../../celestial/colorsData";
 import {
-  todoUpdateColor,
-  todoDelete,
-  todoUpdateStatus,
-  selectTodoById, useAddTaskMutation, useUpdateTaskStatusMutation, useDeleteTaskMutation, useUpdateTaskColorMutation,
-} from '../../dataApi/tasksApiSlice'
-import {StatusFilters} from "../../dataApi/filtersSlice";
+  selectTasksById, usePutTaskStatusMutation, useDeleteTaskMutation, usePutTaskColorMutation,
+} from '../../celestial/tasksData'
 
 // Destructure `props.id`, since we just need the ID value
 const TodoListItem = ({ id }) => {
   const colorLoadingStatus = useSelector((state) => state.colors.status)
 
   // Call our `selectTodoById` with the state _and_ the ID value
-  const todo = useSelector((state) => selectTodoById(state, id))
+  const todo = useSelector((state) => selectTasksById(state, id))
   // console.log("---- Selected todo: ", todo)
   const text = todo.text
 
-  const status = todo.status === StatusFilters.Completed ? true : false
+  const status = todo.status === StatusFilters.Completed
 
-  const color = useSelector((state) => selectColorById(state, todo.color))
+  const color = useSelector((state) => selectColorsById(state, todo.color))
     // console.log("---- Selected color: ", color)
   const todoColor = color === undefined ? 'black' : color.color
   // console.log("---- Selected todoColor: ", todoColor)
   const allColors = useSelector((state) => selectColors(state))
     // console.log("---- testing selectors: ", testing)
 
-  const [updateTaskColor, { temp1 }] = useUpdateTaskColorMutation()
-  const [updateTaskStatus, { temp2 }]  = useUpdateTaskStatusMutation()
+  const [updateTaskColor, { temp1 }] = usePutTaskColorMutation()
+  const [updateTaskStatus, { temp2 }]  = usePutTaskStatusMutation()
   const [deleteTask, { temp3 }]  = useDeleteTaskMutation()
 
   const dispatch = useDispatch()
 
   const handleCompletedChanged = (e) => {
     const newStatus = e.target.checked ? 1 : 3
-    updateTaskStatus({task_id: todo.id, status:newStatus})
-    // dispatch(todoUpdateStatus(todo.id, newStatus))
+    updateTaskStatus({updateTaskStatus: {task_id: todo.id, status:newStatus}})
   }
 
   const handleColorChanged = (e) => {
     const color = e.target.value
     const colorId = allColors.find((item) => item.color === color).id
-    updateTaskColor({task_id: todo.id, color:colorId})
-    // dispatch(todoUpdateColor(todo.id, colorId))
+    updateTaskColor({updateTaskColor: {task_id: todo.id, color:colorId}})
   }
 
   const onDelete = () => {
-    deleteTask({task_id: todo.id})
-    // dispatch(todoDelete(todo.id))
+    deleteTask({deleteTask: {task_id: todo.id}})
   }
 
   const onSave = () => {

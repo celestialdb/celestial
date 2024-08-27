@@ -16,7 +16,8 @@
     "react-scripts": "3.4.3",
     "reselect": "^4.0.0",
     "seedrandom": "^3.0.5",
-    "redux": "^5.0.1"
+    "redux": "^5.0.1",
+    "typescript": "^5.3.3"
   },
   "scripts": {
     "start": "react-scripts start",

@@ -7,6 +7,7 @@ const cache = createSlice({
     updateCache: {
       reducer(state, action) {
         const { key, value } = action.payload;
+        //@ts-ignore
         state[key] = value;
       },
       prepare(key, value) {
@@ -21,4 +22,4 @@ const cache = createSlice({
 });
 export const { updateCache } = cache.actions;
 export default cache.reducer;
-export const selectCache = (state) => state.cache;
+export const selectCache = (state: any) => state.cache;

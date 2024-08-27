@@ -1,13 +1,13 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 
-import { useAddTaskMutation } from '../../dataApi/tasksApiSlice'
+import { usePostTasksMutation } from '../../celestial/tasksData'
 
 const Header = () => {
   const [text, setText] = useState('')
   const [status, setStatus] = useState('idle')
   const dispatch = useDispatch()
-  const [addTask, { addTaskLoading }] = useAddTaskMutation()
+  const [addTask, { addTaskLoading }] = usePostTasksMutation()
 
   const handleChange = (e) => setText(e.target.value)
 
@@ -17,8 +17,7 @@ const Header = () => {
     if (e.which === 13 && trimmedText) {
       // Create and dispatch the thunk function itself
       setStatus('loading')
-      console.log("----- addTask: ", trimmedText )
-      await addTask({text: trimmedText})
+      await addTask({newTask: {text: trimmedText}})
       // And clear out the text input
       setText('')
       setStatus('idle')

@@ -16,7 +16,7 @@ export const statusData = createApi({
     }),
   }),
 });
-const selectEntryResult = (state) =>
+const selectEntryResult = (state: any) =>
   statusData.endpoints.getStatus.select()(state).data;
 const entrySelectors = entityAdapter.getSelectors(
   (state) => selectEntryResult(state) ?? initialState,

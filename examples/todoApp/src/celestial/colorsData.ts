@@ -16,7 +16,7 @@ export const colorsData = createApi({
     }),
   }),
 });
-const selectEntryResult = (state) =>
+const selectEntryResult = (state: any) =>
   colorsData.endpoints.getColors.select()(state).data;
 const entrySelectors = entityAdapter.getSelectors(
   (state) => selectEntryResult(state) ?? initialState,
