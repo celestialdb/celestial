@@ -1,25 +1,8 @@
-/*
-import { generateEndpoints, generateStoreConfig, generateBasicRTKSlice } from '../celestial-codegen/lib/index.js'
+#!/usr/bin/env node
 
-await generateEndpoints({
-    schemaFile: '/Users/kriti/celestial/ex/celestial-server/open_api_spec.json',
-    key: 'tasks',
-    // this is the concat of endpoint capitalized and the open. For ex. get and Tasks
-    endpointToIndex: 'getTasks',
-    hooks: true,
-    tag: true,
-})
+import { generateEndpoints, generateStoreConfig, generateBasicRTKSlice } from '@celestial-labs/codegen-openapi'
 
-await generateStoreConfig()
-
-await generateBasicRTKSlice()
- */
-
-
-import { generateEndpoints, generateStoreConfig, generateBasicRTKSlice } from '../celestial-codegen/lib/index.js'
 import fs from 'fs';
-
-// '/Users/kriti/celestial/ex/celestial-server/open_api_spec.json'
 
 if (process.argv.length < 4) {
     console.log("Usage: node index.js <openApiSpecFile> <destinationFolder>")
@@ -29,6 +12,11 @@ if (process.argv.length < 4) {
 const openApiSpecFile = process.argv[2]
 
 const destinationFolder = process.argv[3]
+
+// create destination folder if it doesn't exist
+if (!fs.existsSync(destinationFolder)){
+    fs.mkdirSync(destinationFolder, { recursive: true });
+}
 
 console.log("Generating definitions for Open API Spec at ", openApiSpecFile)
 
@@ -45,8 +33,6 @@ Object.keys(openApiSpec.paths).forEach((path) => {
     })
 })
 
-console.log("---- Tags: ", tags)
-// tags = ["Status"]
 for (let tag of tags) {
     await generateEndpoints({
         schemaFile: openApiSpecFile,
