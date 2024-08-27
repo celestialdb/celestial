@@ -33,3 +33,9 @@ export const selectFilteredTodoIds = createSelector(
     // And derive data in the output selector
     (filteredTodos) => filteredTodos.map((todo) => todo.id)
 )
+
+export const selectCompletedTodoIds = createSelector(
+    selectTasks,
+    // And derive data in the output selector
+    (todos) => todos.filter((todo) => todo.status === StatusFilters.Completed).map((todo) => todo.id)
+)

@@ -5,10 +5,9 @@ import { capitalize, StatusFilters } from '../../utils/utils'
 import { selectColors } from "../../celestial/colorsData";
 import {selectCache, updateCache} from "../../celestial/cache";
 import {
-  // completedTodosCleared,
-  // allTodosCompleted,
-  selectTasks,
+    selectTasks, selectTasksIds, useDeleteTaskMutation, usePutTaskStatusMutation,
 } from '../../celestial/tasksData'
+import {selectCompletedTodoIds} from "../../utils/selectors";
 
 const RemainingTodos = ({ count }) => {
   const suffix = count === 1 ? '' : 's'
@@ -81,6 +80,10 @@ const ColorFilters = ({ value: colors, onChange }) => {
 
 const Footer = () => {
   const dispatch = useDispatch()
+    const [updateTaskStatus, { temp2 }]  = usePutTaskStatusMutation()
+    const [deleteTask, { temp3 }]  = useDeleteTaskMutation()
+    const todoIds = useSelector(state => selectTasksIds(state))
+    const completedTodoIds = useSelector((state) => selectCompletedTodoIds(state))
 
   const todosRemaining = useSelector((state) => {
     const uncompletedTodos = selectTasks(state).filter(
@@ -91,8 +94,16 @@ const Footer = () => {
 
   const { status, colors } = useSelector((state) => selectCache(state))
 
-  const onMarkCompletedClicked = () => console.log("")// dispatch(allTodosCompleted())
-  const onClearCompletedClicked = () => console.log("") // dispatch(completedTodosCleared())
+  const onMarkCompletedClicked = () => {
+      todoIds.forEach((id) => {
+          updateTaskStatus({updateTaskStatus:{task_id: id, status: StatusFilters.Completed}})
+      })
+  }
+  const onClearCompletedClicked = () => {
+        completedTodoIds.forEach((id) => {
+            deleteTask({deleteTask: {task_id: id}})
+        })
+  }
 
   const onColorChange = (color, changeType) => {
       let temp = colors
