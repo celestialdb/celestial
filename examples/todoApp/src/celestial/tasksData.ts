@@ -18,7 +18,6 @@ export const tasksData = createApi({
       query: (queryArg) => ({
         url: `/tasks`,
         method: "POST",
-        headers: { 'Content-Type': 'application/json' },
         body: queryArg.newTask,
       }),
       invalidatesTags: ["Tasks"],
@@ -27,7 +26,6 @@ export const tasksData = createApi({
       query: (queryArg) => ({
         url: `/task`,
         method: "DELETE",
-        headers: { 'Content-Type': 'application/json' },
         body: queryArg.deleteTask,
       }),
       invalidatesTags: ["Tasks"],
@@ -36,7 +34,6 @@ export const tasksData = createApi({
       query: (queryArg) => ({
         url: `/task/color`,
         method: "PUT",
-        headers: { 'Content-Type': 'application/json' },
         body: queryArg.updateTaskColor,
       }),
       invalidatesTags: ["Tasks"],
@@ -48,7 +45,6 @@ export const tasksData = createApi({
       query: (queryArg) => ({
         url: `/task/status`,
         method: "PUT",
-        headers: { 'Content-Type': 'application/json' },
         body: queryArg.updateTaskStatus,
       }),
       invalidatesTags: ["Tasks"],
