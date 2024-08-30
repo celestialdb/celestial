@@ -11,32 +11,6 @@
     }
   ],
   "paths": {
-    "/authentication/guest": {
-      "post": {
-        "summary": "Create a guest account",
-        "x-celestial-grouping": "auth",
-        "tags": [
-          "Authentication"
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "authToken": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/comments": {
       "post": {
         "summary": "Create a new comment",
@@ -61,6 +35,34 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Comment"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Get comments",
+        "x-celestial-grouping": "comments",
+        "x-celestial-index-endpoint": true,
+        "tags": [
+          "Comments"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "issues": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Comment"
+                      }
+                    }
+                  }
                 }
               }
             }
@@ -146,15 +148,6 @@
         "tags": [
           "Issues"
         ],
-        "parameters": [
-          {
-            "name": "searchTerm",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
         "responses": {
           "200": {
             "description": "Successful response",
@@ -207,35 +200,6 @@
       }
     },
     "/issues/{issueId}": {
-      "get": {
-        "summary": "Get an issue with users and comments",
-        "x-celestial-grouping": "issues",
-        "tags": [
-          "Issues"
-        ],
-        "parameters": [
-          {
-            "name": "issueId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/IssueWithUsersAndComments"
-                }
-              }
-            }
-          }
-        }
-      },
       "put": {
         "summary": "Update an issue",
         "x-celestial-grouping": "issues",
@@ -307,7 +271,7 @@
     },
     "/project": {
       "get": {
-        "summary": "Get project with users and issues",
+        "summary": "Get projects",
         "x-celestial-index-endpoint": true,
         "x-celestial-grouping": "projects",
         "tags": [
@@ -319,7 +283,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ProjectWithUsersAndIssues"
+                  "$ref": "#/components/schemas/Project"
                 }
               }
             }
@@ -684,6 +648,34 @@
       "BearerAuth": {
         "type": "http",
         "scheme": "bearer"
+      }
+    }
+  },
+  "x-removed-paths": {
+    "/authentication/guest": {
+      "post": {
+        "summary": "Create a guest account",
+        "x-celestial-grouping": "auth",
+        "tags": [
+          "Authentication"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "authToken": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     }
   },

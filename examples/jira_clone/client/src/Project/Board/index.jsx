@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
-import { Route, useRouteMatch, useHistory } from 'react-router-dom';
+import { Route, useMatch, useNavigate } from 'react-router-dom';
 
 import useMergeState from 'shared/hooks/mergeState';
 import { Breadcrumbs, Modal } from 'shared/components';
@@ -24,8 +24,8 @@ const defaultFilters = {
 };
 
 const ProjectBoard = ({ project, fetchProject, updateLocalProjectIssues }) => {
-  const match = useRouteMatch();
-  const history = useHistory();
+  const match = useMatch();
+  const history = useNavigate();
 
   const [filters, mergeFilters] = useMergeState(defaultFilters);
 

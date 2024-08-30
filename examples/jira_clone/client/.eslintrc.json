@@ -38,7 +38,8 @@
     // Allows us to lint absolute imports within codebase
     "import/resolver": {
       "node": {
-        "moduleDirectory": ["node_modules", "src/"]
+        "moduleDirectory": ["node_modules", "src/"],
+        "extensions": [".js", ".jsx", ".ts", ".tsx"]
       }
     }
   }

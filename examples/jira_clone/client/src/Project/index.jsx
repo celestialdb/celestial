@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Redirect, useRouteMatch, useHistory } from 'react-router-dom';
+import { Route, Navigate, useMatch, useNavigate } from 'react-router-dom';
 
 import useApi from 'shared/hooks/api';
 import { updateArrayItemById } from 'shared/utils/javascript';
@@ -15,13 +15,13 @@ import ProjectSettings from './ProjectSettings';
 import { ProjectPage } from './Styles';
 
 const Project = () => {
-  const match = useRouteMatch();
-  const history = useHistory();
+  const match = useMatch();
+  const history = useNavigate();
 
   const issueSearchModalHelpers = createQueryParamModalHelpers('issue-search');
   const issueCreateModalHelpers = createQueryParamModalHelpers('issue-create');
 
-  const [{ data, error, setLocalData }, fetchProject] = useApi.get('/project');
+  const [{ data, error, setLocalData }, fetchProject] = useApi.get('/projectOld');
 
   if (!data) return <PageLoader />;
   if (error) return <PageError />;
@@ -91,7 +91,7 @@ const Project = () => {
         render={() => <ProjectSettings project={project} fetchProject={fetchProject} />}
       />
 
-      {match.isExact && <Redirect to={`${match.url}/board`} />}
+      {match.isExact && <Navigate to={`${match.url}/board`} />}
     </ProjectPage>
   );
 };

@@ -2,6 +2,14 @@ import { Issue } from 'entities';
 import { catchErrors } from 'errors';
 import { updateEntity, deleteEntity, createEntity, findEntityOrThrow } from 'utils/typeorm';
 
+export const getIssues = catchErrors(async (_req, res) => {
+  const issues = await Issue.createQueryBuilder('issue')
+    .select()
+    .getMany();
+
+  res.respond({ issues });
+});
+
 export const getProjectIssues = catchErrors(async (req, res) => {
   const { projectId } = req.currentUser;
   const { searchTerm } = req.query;

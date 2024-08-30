@@ -13,9 +13,14 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.jsx?$/,
+        test: /\.(js|jsx|ts|tsx)$/,
         exclude: /node_modules/,
-        use: ['babel-loader'],
+        use: {
+          loader: "babel-loader",
+          options: {
+            presets: ["@babel/preset-react", "@babel/preset-env", "@babel/preset-typescript"],
+          },
+        },
       },
       {
         test: /\.css$/,
@@ -35,11 +40,11 @@ module.exports = {
   resolve: {
     // allows us to do absolute imports from "src"
     modules: [path.join(__dirname, 'src'), 'node_modules'],
-    extensions: ['*', '.js', '.jsx'],
+    extensions: ['*', '.js', '.jsx', '.ts', '.tsx'],
   },
   devtool: 'eval-source-map',
   devServer: {
-    contentBase: path.join(__dirname, 'dev'),
+    static: path.join(__dirname, 'dev'),
     historyApiFallback: true,
     hot: true,
   },

@@ -31,7 +31,8 @@ const propTypes = {
 const ProjectIssueSearch = ({ project }) => {
   const [isSearchTermEmpty, setIsSearchTermEmpty] = useState(true);
 
-  const [{ data, isLoading }, fetchIssues] = useApi.get('/issues', {}, { lazy: true });
+  
+  const [{ data, isLoading }, fetchIssues] = useApi.get('/issuesOld', {}, { lazy: true });
 
   const matchingIssues = get(data, 'issues', []);
 

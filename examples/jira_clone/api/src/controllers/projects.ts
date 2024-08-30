@@ -3,6 +3,17 @@ import { catchErrors } from 'errors';
 import { findEntityOrThrow, updateEntity } from 'utils/typeorm';
 import { issuePartial } from 'serializers/issues';
 
+export const getProjects = catchErrors(async (_req, res) => {
+  const project = await Project.createQueryBuilder('project')
+    .select()
+    .getMany();
+  res.respond({
+    project: {
+      ...project,
+    },
+  });
+});
+
 export const getProjectWithUsersAndIssues = catchErrors(async (req, res) => {
   const project = await findEntityOrThrow(Project, {
     where: {

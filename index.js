@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import { generateEndpoints, generateStoreConfig, generateBasicRTKSlice } from '@celestial-labs/codegen-openapi'
+import { generateEndpoints, generateStoreConfig, generateBasicRTKSlice } from '../celestial-codegen/lib/index.js'
 
 import fs from 'fs';
 
@@ -33,7 +33,9 @@ Object.keys(openApiSpec.paths).forEach((path) => {
     })
 })
 
+
 for (let tag of tags) {
+    console.log("Generating for tag: ", tag)
     await generateEndpoints({
         schemaFile: openApiSpecFile,
         outputFolder: destinationFolder,
