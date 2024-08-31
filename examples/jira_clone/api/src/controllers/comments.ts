@@ -16,3 +16,10 @@ export const remove = catchErrors(async (req, res) => {
   const comment = await deleteEntity(Comment, req.params.commentId);
   res.respond({ comment });
 });
+
+export const get = catchErrors(async (_req, res) => {
+  const comment = await Comment.createQueryBuilder('comment')
+    .select()
+    .getMany();
+  res.respond({ comment });
+});
