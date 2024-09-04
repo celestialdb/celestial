@@ -12,7 +12,7 @@ export const projectsData = createApi({
       query: () => ({ url: `/project`, headers: {Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjksImlhdCI6MTcyNTAzNzQ5NywiZXhwIjoxNzQwNTg5NDk3fQ.uj8Edcda52PVczeJn0KLXDu-XjzKMFMWJ2rH1uBThE4'} }),
       providesTags: ["Projects"],
       transformResponse: (responseData: GetProjectApiResponse) =>
-        entityAdapter.setAll(initialState, responseData),
+        entityAdapter.setAll(initialState, responseData.projects),
     }),
     putProject: build.mutation<PutProjectApiResponse, PutProjectApiArg>({
       query: (queryArg) => ({
@@ -33,7 +33,7 @@ export const selectProjects = entrySelectors.selectAll;
 export const selectProjectsIds = entrySelectors.selectIds;
 export const selectProjectsById = entrySelectors.selectById;
 export type GetProjectApiResponse =
-  /** status 200 Successful response */ Project;
+  /** status 200 Successful response */ {projects: Project[]};
 export type GetProjectApiArg = void;
 export type PutProjectApiResponse =
   /** status 200 Successful response */ Project;

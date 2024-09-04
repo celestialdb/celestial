@@ -20,7 +20,7 @@ export const commentsData = createApi({
       query: () => ({ url: `/comments`, headers: {Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjksImlhdCI6MTcyNTAzNzQ5NywiZXhwIjoxNzQwNTg5NDk3fQ.uj8Edcda52PVczeJn0KLXDu-XjzKMFMWJ2rH1uBThE4'} }),
       providesTags: ["Comments"],
       transformResponse: (responseData: GetCommentsApiResponse) =>
-        entityAdapter.setAll(initialState, responseData),
+        entityAdapter.setAll(initialState, responseData.comment),
     }),
     putCommentsByCommentId: build.mutation<
       PutCommentsByCommentIdApiResponse,
@@ -59,7 +59,7 @@ export type PostCommentsApiArg = {
   commentInput: CommentInput;
 };
 export type GetCommentsApiResponse = /** status 200 Successful response */ {
-  issues?: Comment[];
+  comment?: Comment[];
 };
 export type GetCommentsApiArg = void;
 export type PutCommentsByCommentIdApiResponse =

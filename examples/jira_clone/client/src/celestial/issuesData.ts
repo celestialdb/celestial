@@ -2,7 +2,7 @@ import { createEntityAdapter, Dictionary, EntityState } from "@reduxjs/toolkit";
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 const entityAdapter = createEntityAdapter();
-const initialState: EntityState<any> = entityAdapter.getInitialState();
+const initialState: EntityState<any> = entityAdapter.getInitialState({ids:[], entities:{}});
 export const issuesData = createApi({
   reducerPath: "issues",
   baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3000" }),
@@ -13,7 +13,7 @@ export const issuesData = createApi({
         headers: {Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjksImlhdCI6MTcyNTAzNzQ5NywiZXhwIjoxNzQwNTg5NDk3fQ.uj8Edcda52PVczeJn0KLXDu-XjzKMFMWJ2rH1uBThE4'} }),
       providesTags: ["Issues"],
       transformResponse: (responseData: GetIssuesApiResponse) =>
-        entityAdapter.setAll(initialState, responseData),
+        entityAdapter.setAll(initialState, responseData.issues),
     }),
     postIssues: build.mutation<PostIssuesApiResponse, PostIssuesApiArg>({
       query: (queryArg) => ({
@@ -30,6 +30,7 @@ export const issuesData = createApi({
       query: (queryArg) => ({
         url: `/issues/${queryArg.issueId}`,
         method: "PUT",
+        headers: {Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjksImlhdCI6MTcyNTAzNzQ5NywiZXhwIjoxNzQwNTg5NDk3fQ.uj8Edcda52PVczeJn0KLXDu-XjzKMFMWJ2rH1uBThE4'},
         body: queryArg.issueInput,
       }),
       invalidatesTags: ["Issues"],
