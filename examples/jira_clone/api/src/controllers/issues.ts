@@ -10,6 +10,18 @@ export const getIssues = catchErrors(async (_req, res) => {
   res.respond({ issues });
 });
 
+export const getIssueAssignees = catchErrors(async (_req, res) => {
+  const issueAssignees = await Issue.createQueryBuilder('issue')
+    .leftJoinAndSelect('issue.users', 'user')
+    .select([
+      'issue.id', // Select issue id
+      'user.id', // Select user id
+    ])
+    .getMany();
+
+  res.respond({ issueAssignees });
+});
+
 export const getProjectIssues = catchErrors(async (req, res) => {
   const { projectId } = req.currentUser;
   const { searchTerm } = req.query;
