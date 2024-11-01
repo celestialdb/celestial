@@ -1,7 +1,7 @@
-<div style="text-align: center;padding: 0px">
-<h1 style="padding: 0px">celestial</h1>
-<h2 style="padding: 0px">Managed <t style="color: #764abc">Redux Toolkit</t></h2>
-<h3 style="padding: 0px">Auto-generate RTK definitions from your OpenAPI Spec</h3>
+<div align="center" padding=0px>
+<h1 padding=0px>celestial</h1>
+<h2 padding=0px>Managed <span style="color:#764abc">Redux Toolkit</span></h2>
+<h3 padding=0px>Auto-generate RTK definitions from your OpenAPI Spec</h3>
 </div>
 
 ###
