@@ -8,9 +8,14 @@
 
 Celestial generates RTK definitions for your backend with built-in support for caching and optimistic updates.
 
-For those who don't know Redux Toolkit, Celestial provides simple query and mutation hooks to interact with your backend with built-in support for caching and optimistic updates.
+In other words, Celestial provides simple query and mutation hooks to interact with your backend with built-in support for caching and optimistic updates.
 
-After generating the RTK definitions, you only have to do the following. No need to write data fetching logic, no need to write reducers, no need to write action creators, no need to write selectors, no need to write middleware, no need to write store configuration, no need to write tests for all of these.
+You only have to do the following:
+```bash
+npm install @celestial-labs/celestial --save-dev
+npx celestial openApi.json ./src/celestial
+```
+
 ```js
 // call the hooks
 useGetColorsQuery()
@@ -21,6 +26,8 @@ const todo = useSelector(selectTasksById(id))
 const todoColor = useSelector(selectColorsById(todo.colorId))
 const allColors = useSelector(selectColors)
 ```
+No need to write data fetching, reducers, action creators, selectors, middleware, store configuration.
+
 Updating the backend is just as simple:
 ```js
 const [ addTask ] = usePostTasksMutation()
@@ -45,7 +52,7 @@ const onStatusChange = (status) => {
 ```
 
 ## On this page
-* [Celestial]()
+* [What is Celestial](https://github.com/celestialdb/celestial/tree/main?tab=readme-ov-file#what-is-celestial)
 * [DX with Celestial]()
 * [Usage]()
   * [Installation]()
@@ -61,11 +68,11 @@ const onStatusChange = (status) => {
   * [Jira Clone]()
 
 
-# Celestial
+# What is Celestial
 
-[Redux Toolkit](https://github.com/reduxjs/redux-toolkit) is a  provides a rich set of tools to build fast, snappy frontends. However, managing an in-house deployment is complex and requires expertise. Celestial gives you all the power of Redux Toolkit minus the hassle, making it simpler to build fast and snappy React apps.
+[Redux Toolkit](https://github.com/reduxjs/redux-toolkit) provides a rich set of tools to build fast, snappy frontends. However, managing an in-house deployment is complex and requires expertise. Celestial gives you all the power of Redux Toolkit minus the hassle, making it simpler to build fast and snappy React apps.
 
-**Celestial wraps away the complexity of Redux Toolkit, exposing an intuitive hook-based interface for declarative server interaction and simplified state management.**
+**By generating your RTK definitions, Celestial wraps away the complexity of Redux Toolkit, exposing an intuitive hook-based interface for declarative server interaction and simplified state management.**
 
 
 > * Auto-generated query and mutation hooks for your backend with built in support for caching and optimistic update, and auto-syncing of client state with the server. 
