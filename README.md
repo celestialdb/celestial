@@ -53,19 +53,19 @@ const onStatusChange = (status) => {
 
 ## On this page
 * [What is Celestial](https://github.com/celestialdb/celestial/tree/main?tab=readme-ov-file#what-is-celestial)
-* [DX with Celestial]()
-* [Usage]()
-  * [Installation]()
-  * [Generate RTK Definitions]()
-  * [Provide RTK Definitions to your app]()
-  * [Data fetching and injecting data in components]()
-  * [Performing mutations]()
-  * [State Management]()
-* [Acknowledgements]()
-* [Features]()
-* [Code Samples]()
-  * [ToDo App]()
-  * [Jira Clone]()
+* [DX with Celestial](https://github.com/celestialdb/celestial/tree/main?tab=readme-ov-file#dx-with-celestial)
+* [Usage](https://github.com/celestialdb/celestial/tree/main?tab=readme-ov-file#usage)
+  * [Installation](https://github.com/celestialdb/celestial/tree/main?tab=readme-ov-file#installation)
+  * [Generate RTK Definitions](https://github.com/celestialdb/celestial/tree/main?tab=readme-ov-file#generate-rtk-definitions)
+  * [Connect your app](https://github.com/celestialdb/celestial/tree/main?tab=readme-ov-file#connect-your-app)
+  * [Data fetching and injecting data in components](https://github.com/celestialdb/celestial/tree/main?tab=readme-ov-file#data-fetching-and-injecting-data-in-components)
+  * [Performing mutations](https://github.com/celestialdb/celestial/tree/main?tab=readme-ov-file#performing-mutations)
+  * [State Management](https://github.com/celestialdb/celestial/tree/main?tab=readme-ov-file#state-management)
+* [Acknowledgements](https://github.com/celestialdb/celestial/tree/main?tab=readme-ov-file#acknowledgements)
+* [Features](https://github.com/celestialdb/celestial/tree/main?tab=readme-ov-file#features)
+* [Code Samples](https://github.com/celestialdb/celestial/tree/main?tab=readme-ov-file#code-samples)
+  * [ToDo App](https://github.com/celestialdb/celestial/tree/main?tab=readme-ov-file#todo-app)
+  * [Jira Clone](https://github.com/celestialdb/celestial/tree/main?tab=readme-ov-file#jira-clone)
 
 
 # What is Celestial
@@ -97,7 +97,7 @@ npm install @celestial-labs/celestial --save-dev
 npx celestial openAPISpec.json outputPath
 ```
 
-## Provide RTK Definitions to your app
+## Connect your app
 ```js
 import { store } from 'celestial/store'
 import { Provider } from 'react-redux'
