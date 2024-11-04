@@ -1,7 +1,8 @@
-import {selectTasks} from "../celestial/tasksData";
+import {selectTasks} from "../celestial";
 import {createSelector} from "@reduxjs/toolkit";
 import {StatusFilters} from "./utils";
-import {selectCache} from "../celestial/cache";
+import {selectCache} from "../celestial";
+import {selectColors} from "../celestial";
 
 
 export const selectFilteredTodos = createSelector(
@@ -14,11 +15,11 @@ export const selectFilteredTodos = createSelector(
         const { status, colors } = filters
         const showAllCompletions = status === StatusFilters.All
         if (showAllCompletions && colors.length === 0) {
-            return todos
+            return Object.values(todos)
         }
 
         // Return either active or completed todos based on filter
-        return todos.filter((todo) => {
+        return Object.values(todos).filter((todo) => {
             const statusMatches =
                 showAllCompletions || todo.status === status
             const colorMatches = colors.length === 0 || colors.includes(todo.color)
@@ -28,14 +29,24 @@ export const selectFilteredTodos = createSelector(
 )
 
 export const selectFilteredTodoIds = createSelector(
-    // Pass our other memoized selector as an input
     selectFilteredTodos,
-    // And derive data in the output selector
     (filteredTodos) => filteredTodos.map((todo) => todo.id)
 )
 
 export const selectCompletedTodoIds = createSelector(
     selectTasks,
-    // And derive data in the output selector
-    (todos) => todos.filter((todo) => todo.status === StatusFilters.Completed).map((todo) => todo.id)
+    (todos) => Object.values(todos).filter((todo) => todo.status === StatusFilters.Completed).map((todo) => todo.id)
 )
+
+// useSelector((state) => selectColorId(state, color))
+export const selectColorId = createSelector(
+    selectColors,
+        (state, color) => color,
+    (colors, color) => {
+        if (colors.length === 0 || Object.keys(color).length === 0) {
+            return 0
+        }
+        return colors.find((item) => item.color === color.color).id
+    }
+)
+
