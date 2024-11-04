@@ -1,6 +1,6 @@
-import { createEntityAdapter, Dictionary, EntityState } from "@reduxjs/toolkit";
-import { createApi } from "@reduxjs/toolkit/query/react";
-import { fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import {createEntityAdapter, EntityState} from "@reduxjs/toolkit";
+import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react";
+
 const entityAdapter = createEntityAdapter();
 const initialState: EntityState<any> = entityAdapter.getInitialState();
 export const tasksData = createApi({
@@ -20,6 +20,15 @@ export const tasksData = createApi({
         method: "POST",
         body: queryArg.newTask,
       }),
+      async onQueryStarted({ ...patch }, { dispatch, queryFulfilled }) {
+        dispatch(
+            tasksData.util.updateQueryData('getTasks', undefined, (cache) => {
+              Object.assign(patch.newTask, {id:0})
+              Object.assign(cache.entities, {0:patch.newTask})
+              cache.ids.push(0)
+            })
+        )
+      },
       invalidatesTags: ["Tasks"],
     }),
     deleteTask: build.mutation<DeleteTaskApiResponse, DeleteTaskApiArg>({
@@ -28,6 +37,16 @@ export const tasksData = createApi({
         method: "DELETE",
         body: queryArg.deleteTask,
       }),
+      async onQueryStarted({ ...patch }, { dispatch, queryFulfilled }) {
+        const task_id = patch.deleteTask.task_id
+        dispatch(
+            tasksData.util.updateQueryData('getTasks', undefined, (cache) => {
+              var index = cache.ids.indexOf(task_id);
+              cache.ids.splice(index, 1);
+              delete cache.entities[task_id]
+            })
+        )
+      },
       invalidatesTags: ["Tasks"],
     }),
     putTaskColor: build.mutation<PutTaskColorApiResponse, PutTaskColorApiArg>({
@@ -36,6 +55,17 @@ export const tasksData = createApi({
         method: "PUT",
         body: queryArg.updateTaskColor,
       }),
+      async onQueryStarted({ ...patch }, { dispatch, queryFulfilled }) {
+        const task_id = patch.updateTaskColor.task_id
+        const color = patch.updateTaskColor.color
+        dispatch(
+            tasksData.util.updateQueryData('getTasks', undefined, (cache) => {
+              const replacement = cache.entities[task_id]
+              Object.assign(replacement,{color:color})
+              Object.assign(cache.entities, replacement)
+            })
+        )
+      },
       invalidatesTags: ["Tasks"],
     }),
     putTaskStatus: build.mutation<
@@ -47,6 +77,17 @@ export const tasksData = createApi({
         method: "PUT",
         body: queryArg.updateTaskStatus,
       }),
+      async onQueryStarted({ ...patch }, { dispatch, queryFulfilled }) {
+        const task_id = patch.updateTaskStatus.task_id
+        const status = patch.updateTaskStatus.status
+        dispatch(
+            tasksData.util.updateQueryData('getTasks', undefined, (cache) => {
+              const replacement = cache.entities[task_id]
+              Object.assign(replacement,{status:status})
+              Object.assign(cache.entities, replacement)
+            })
+        )
+      },
       invalidatesTags: ["Tasks"],
     }),
   }),
