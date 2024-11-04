@@ -97,6 +97,8 @@ npm install @celestial-labs/celestial --save-dev
 npx celestial openAPISpec.json outputPath
 ```
 
+## Generated RTK Definitions??
+
 ## Connect your app
 ```js
 import { store } from 'celestial/store'
@@ -126,18 +128,20 @@ const todo = useSelector(selectTasksById(id))
 const todoColor = useSelector(selectColorsById(todo.colorId))
 const allColors = useSelector(selectColors)
 ```
+> Notice the pattern between the name of query hooks and their corresponding endpoint. Read more [here]().
 
 ## Performing mutations
 ```js
 import { usePostTasksMutation } from '../../celestial/tasksData'
 
 // call hook at the top of the component
+// this will issue a POST on /tasks endpoint
 const [ addTask ] = usePostTasksMutation()
 
-// this will issue a POST on /tasks endpoint
 // we call the mutation using arguments required by the POST endpoint
 addTask({newTask: {text: trimmedText}})
 ```
+> Notice the pattern between the name of mutation hook and the endpoint. Read more [here]().
 
 ## State Management
 ```js
