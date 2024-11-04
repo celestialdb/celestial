@@ -34,9 +34,16 @@ export const selectProjectUsers = createSelector(
   },
 );
 
-// TODO: right now using all issues, make it project issues
-export const selectFilteredIssues = createSelector(
+export const selectProjectIssues = createSelector(
+  selectCurrentProject,
   selectIssues,
+  (project, issues) => {
+    return issues.filter(issue => issue.projectId === project.id);
+  },
+);
+
+export const selectFilteredIssues = createSelector(
+  selectProjectIssues,
   selectCache,
   selectCurrentUser,
   (issues, cache, currentUser) => {

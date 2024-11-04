@@ -25,7 +25,6 @@ const ProjectBoardFilters = () => {
   const projectUsers = useSelector(state => selectProjectUsers(state)) || [];
 
   const filters = useSelector(state => selectCache(state) || {}).filters || {};
-  console.log('--- filters: ', filters);
 
   const { searchTerm, userIds, myOnly, recent } = filters;
 

@@ -13,6 +13,7 @@ export const commentsData = createApi({
         url: `/comments`,
         method: "POST",
         body: queryArg.commentInput,
+        headers: {Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjksImlhdCI6MTcyNTAzNzQ5NywiZXhwIjoxNzQwNTg5NDk3fQ.uj8Edcda52PVczeJn0KLXDu-XjzKMFMWJ2rH1uBThE4'}
       }),
       invalidatesTags: ["Comments"],
     }),
@@ -30,6 +31,7 @@ export const commentsData = createApi({
         url: `/comments/${queryArg.commentId}`,
         method: "PUT",
         body: queryArg.commentInput,
+        headers: {Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjksImlhdCI6MTcyNTAzNzQ5NywiZXhwIjoxNzQwNTg5NDk3fQ.uj8Edcda52PVczeJn0KLXDu-XjzKMFMWJ2rH1uBThE4'}
       }),
       invalidatesTags: ["Comments"],
     }),
@@ -40,6 +42,7 @@ export const commentsData = createApi({
       query: (queryArg) => ({
         url: `/comments/${queryArg.commentId}`,
         method: "DELETE",
+        headers: {Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjksImlhdCI6MTcyNTAzNzQ5NywiZXhwIjoxNzQwNTg5NDk3fQ.uj8Edcda52PVczeJn0KLXDu-XjzKMFMWJ2rH1uBThE4'}
       }),
       invalidatesTags: ["Comments"],
     }),

@@ -18,6 +18,7 @@ export const issuesData = createApi({
     postIssues: build.mutation<PostIssuesApiResponse, PostIssuesApiArg>({
       query: (queryArg) => ({
         url: `/issues`,
+        headers: {Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjksImlhdCI6MTcyNTAzNzQ5NywiZXhwIjoxNzQwNTg5NDk3fQ.uj8Edcda52PVczeJn0KLXDu-XjzKMFMWJ2rH1uBThE4'},
         method: "POST",
         body: queryArg.issueInput,
       }),
@@ -42,6 +43,7 @@ export const issuesData = createApi({
       query: (queryArg) => ({
         url: `/issues/${queryArg.issueId}`,
         method: "DELETE",
+        headers: {Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjksImlhdCI6MTcyNTAzNzQ5NywiZXhwIjoxNzQwNTg5NDk3fQ.uj8Edcda52PVczeJn0KLXDu-XjzKMFMWJ2rH1uBThE4'}
       }),
       invalidatesTags: ["Issues"],
     }),

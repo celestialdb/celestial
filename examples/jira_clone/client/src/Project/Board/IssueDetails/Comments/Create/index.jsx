@@ -1,31 +1,33 @@
 import React, { Fragment, useState } from 'react';
 import PropTypes from 'prop-types';
 
-import api from 'shared/utils/api';
-import useCurrentUser from 'shared/hooks/currentUser';
 import toast from 'shared/utils/toast';
 
+import { usePostCommentsMutation } from 'celestial/commentsData';
+import { useSelector } from 'react-redux';
+import { selectCurrentUser } from 'celestial/currentUserData';
 import BodyForm from '../BodyForm';
 import ProTip from './ProTip';
 import { Create, UserAvatar, Right, FakeTextarea } from './Styles';
 
 const propTypes = {
   issueId: PropTypes.number.isRequired,
-  fetchIssue: PropTypes.func.isRequired,
 };
 
-const ProjectBoardIssueDetailsCommentsCreate = ({ issueId, fetchIssue }) => {
+const ProjectBoardIssueDetailsCommentsCreate = ({ issueId }) => {
   const [isFormOpen, setFormOpen] = useState(false);
   const [isCreating, setCreating] = useState(false);
   const [body, setBody] = useState('');
+  const [postComment] = usePostCommentsMutation();
+  const currentUser = useSelector(state => selectCurrentUser(state))[0] || {};
 
-  const { currentUser } = useCurrentUser();
-
+  // TODO: on pressing save, a text box showing new commnet stays
   const handleCommentCreate = async () => {
     try {
       setCreating(true);
-      await api.post(`/comments`, { body, issueId, userId: currentUser.id });
-      await fetchIssue();
+      // await api.post(`/comments`, { body, issueId, userId: currentUser.id });
+      // await fetchIssue();
+      postComment({ commentInput: { body, issueId, userId: currentUser.id } });
       setFormOpen(false);
       setCreating(false);
       setBody('');

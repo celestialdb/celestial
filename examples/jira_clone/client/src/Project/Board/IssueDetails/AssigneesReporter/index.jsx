@@ -3,20 +3,33 @@ import PropTypes from 'prop-types';
 
 import { Avatar, Select, Icon } from 'shared/components';
 
-import { SectionTitle } from '../Styles';
+import { usePutIssuesByIssueIdMutation } from 'celestial/issuesData';
+import { useSelector } from 'react-redux';
+import { selectProjectUsers } from 'utils/selectors';
+import { selectIssueAssigneesById } from 'celestial/issueAssigneesData';
 import { User, Username } from './Styles';
+import { SectionTitle } from '../Styles';
 
 const propTypes = {
   issue: PropTypes.object.isRequired,
-  updateIssue: PropTypes.func.isRequired,
-  projectUsers: PropTypes.array.isRequired,
 };
 
-const ProjectBoardIssueDetailsAssigneesReporter = ({ issue, updateIssue, projectUsers }) => {
+const ProjectBoardIssueDetailsAssigneesReporter = ({ issue }) => {
+  const projectUsers = useSelector(state => selectProjectUsers(state)) || [];
+  const issueAssignees =
+    useSelector(state => selectIssueAssigneesById(state, issue.id) || {}).userIds || [];
+
+  const [updateIssueCall] = usePutIssuesByIssueIdMutation();
+
+  const updateIssue = async updatedFields => {
+    updateIssueCall({ issueId: issue.id, issueInput: updatedFields });
+  };
+
   const getUserById = userId => projectUsers.find(user => user.id === userId);
 
   const userOptions = projectUsers.map(user => ({ value: user.id, label: user.name }));
 
+  // TODO: updating assignees does not update the UI. You have to refresh the page
   return (
     <Fragment>
       <SectionTitle>Assignees</SectionTitle>
@@ -26,7 +39,7 @@ const ProjectBoardIssueDetailsAssigneesReporter = ({ issue, updateIssue, project
         dropdownWidth={343}
         placeholder="Unassigned"
         name="assignees"
-        value={issue.userIds}
+        value={issueAssignees}
         options={userOptions}
         onChange={userIds => {
           updateIssue({ userIds, users: userIds.map(getUserById) });

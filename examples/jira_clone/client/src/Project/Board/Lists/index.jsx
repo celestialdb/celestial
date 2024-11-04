@@ -5,16 +5,14 @@ import { moveItemWithinArray, insertItemIntoArray } from 'shared/utils/javascrip
 import { IssueStatus } from 'shared/constants/issues';
 
 import { useSelector } from 'react-redux';
-import { selectIssues, usePutIssuesByIssueIdMutation } from 'celestial/issuesData';
+import { usePutIssuesByIssueIdMutation } from 'celestial/issuesData';
 import List from './List';
 import { Lists } from './Styles';
-
-// TODO: when issue position is changed, it first reverts to old position before going to final poistion
-// this is happening because of optimistic update does not happen
+import { selectProjectIssues } from '../../../utils/selectors';
 
 const ProjectBoardLists = () => {
   const [updateIssue] = usePutIssuesByIssueIdMutation();
-  const issues = useSelector(state => selectIssues(state));
+  const issues = useSelector(state => selectProjectIssues(state)) || {};
 
   const handleIssueDrop = ({ draggableId, destination, source }) => {
     if (!isPositionChanged(source, destination)) return;
@@ -40,7 +38,6 @@ const ProjectBoardLists = () => {
   };
 
   return (
-    // for now do nothing on dragging
     <DragDropContext onDragEnd={handleIssueDrop}>
       <Lists>
         {Object.values(IssueStatus).map(status => (

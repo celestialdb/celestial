@@ -4,16 +4,25 @@ import PropTypes from 'prop-types';
 import { getTextContentsFromHtmlString } from 'shared/utils/browser';
 import { TextEditor, TextEditedContent, Button } from 'shared/components';
 
+import { usePutIssuesByIssueIdMutation } from 'celestial/issuesData';
 import { Title, EmptyLabel, Actions } from './Styles';
 
 const propTypes = {
   issue: PropTypes.object.isRequired,
-  updateIssue: PropTypes.func.isRequired,
 };
 
-const ProjectBoardIssueDetailsDescription = ({ issue, updateIssue }) => {
+// TODO: description vanishes after update of assignees and reporters
+// description vanishes after refresh even when no update has happened.
+// this is form issue. it happening across all forms.
+const ProjectBoardIssueDetailsDescription = ({ issue }) => {
   const [description, setDescription] = useState(issue.description);
   const [isEditing, setEditing] = useState(false);
+
+  const [updateIssueCall] = usePutIssuesByIssueIdMutation();
+
+  const updateIssue = async updatedFields => {
+    updateIssueCall({ issueId: issue.id, issueInput: updatedFields });
+  };
 
   const handleUpdate = () => {
     setEditing(false);

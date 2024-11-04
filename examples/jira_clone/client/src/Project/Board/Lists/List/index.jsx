@@ -4,13 +4,12 @@ import { Droppable } from 'react-beautiful-dnd';
 import { IssueStatusCopy } from 'shared/constants/issues';
 
 import { useSelector } from 'react-redux';
-import { selectIssues } from 'celestial/issuesData';
-import { selectFilteredIssues } from 'utils/selectors';
+import { selectFilteredIssues, selectProjectIssues } from 'utils/selectors';
 import Issue from './Issue';
 import { List, Title, IssuesCount, Issues } from './Styles';
 
 const ProjectBoardList = ({ status }) => {
-  const allIssues = useSelector(state => selectIssues(state));
+  const allIssues = useSelector(state => selectProjectIssues(state));
   const filteredIssues = useSelector(state => selectFilteredIssues(state)); // filterIssues(allIssues, filters, currentUserId);
   const filteredListIssues = getSortedListIssues(filteredIssues, status);
   const allListIssues = getSortedListIssues(allIssues, status);

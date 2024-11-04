@@ -1,5 +1,4 @@
 import React, { Fragment, useState } from 'react';
-import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { get } from 'lodash';
 
@@ -7,6 +6,8 @@ import useApi from 'shared/hooks/api';
 import { sortByNewest } from 'shared/utils/javascript';
 import { IssueTypeIcon } from 'shared/components';
 
+import { useSelector } from 'react-redux';
+import { selectIssues } from 'celestial/issuesData';
 import NoResultsSVG from './NoResultsSvg';
 import {
   IssueSearch,
@@ -24,18 +25,14 @@ import {
   NoResultsTip,
 } from './Styles';
 
-const propTypes = {
-  project: PropTypes.object.isRequired,
-};
-
-const ProjectIssueSearch = ({ project }) => {
+const ProjectIssueSearch = () => {
   const [isSearchTermEmpty, setIsSearchTermEmpty] = useState(true);
 
   const [{ data, isLoading }, fetchIssues] = useApi.get('/issuesOld', {}, { lazy: true });
-
   const matchingIssues = get(data, 'issues', []);
 
-  const recentIssues = sortByNewest(project.issues, 'createdAt').slice(0, 10);
+  const issues = useSelector(selectIssues);
+  const recentIssues = sortByNewest(issues, 'createdAt').slice(0, 10);
 
   const handleSearchChange = value => {
     const searchTerm = value.trim();
@@ -95,7 +92,5 @@ const renderIssue = issue => (
     </Issue>
   </Link>
 );
-
-ProjectIssueSearch.propTypes = propTypes;
 
 export default ProjectIssueSearch;
