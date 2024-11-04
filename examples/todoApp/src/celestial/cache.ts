@@ -1,4 +1,7 @@
-import { createSlice } from "@reduxjs/toolkit";
+import {createSlice} from "@reduxjs/toolkit";
+import {useEffect} from 'react';
+import {useDispatch} from "react-redux";
+
 const initialState = {};
 const cache = createSlice({
   name: "cache",
@@ -20,6 +23,23 @@ const cache = createSlice({
     },
   },
 });
-export const { updateCache } = cache.actions;
+const { updateCache } = cache.actions;
 export default cache.reducer;
 export const selectCache = (state: any) => state.cache;
+
+export function useCacheInit(key:string, value:any) {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(updateCache(key, value));
+  }, []);
+}
+
+export function useCacheUpdate() {
+  const dispatch = useDispatch();
+
+  return (key: string, value: any) => {
+    dispatch(updateCache(key, value));
+  };
+}
+
