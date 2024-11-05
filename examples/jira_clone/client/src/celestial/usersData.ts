@@ -1,17 +1,20 @@
-import { createEntityAdapter, Dictionary, EntityState } from "@reduxjs/toolkit";
+import { createEntityAdapter, EntityState } from "@reduxjs/toolkit";
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 const entityAdapter = createEntityAdapter();
-const initialState: EntityState<any> = entityAdapter.getInitialState({ids:[], entities:{}});
+const initialState: EntityState<any> = entityAdapter.getInitialState({
+  ids: [],
+  entities: {},
+});
 export const usersData = createApi({
   reducerPath: "users",
   baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3000" }),
-  tagTypes: ["Users"],
+  tagTypes: ["users"],
   endpoints: (build) => ({
-    getUsers: build.query<EntityState<any>, GetUserApiArg>({
-      query: () => ({ url: `/users`, headers: {Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjksImlhdCI6MTcyNTAzNzQ5NywiZXhwIjoxNzQwNTg5NDk3fQ.uj8Edcda52PVczeJn0KLXDu-XjzKMFMWJ2rH1uBThE4'} }),
-      providesTags: ["Users"],
-      transformResponse: (responseData: GetUserApiResponse) =>
+    getUsers: build.query<EntityState<any>, GetUsersApiArg>({
+      query: () => ({ url: `/users` }),
+      providesTags: ["users"],
+      transformResponse: (responseData: GetUsersApiResponse) =>
         entityAdapter.setAll(initialState, responseData.users),
     }),
   }),
@@ -24,9 +27,10 @@ const entrySelectors = entityAdapter.getSelectors(
 export const selectUsers = entrySelectors.selectAll;
 export const selectUsersIds = entrySelectors.selectIds;
 export const selectUsersById = entrySelectors.selectById;
-export type GetUserApiResponse =
-  /** status 200 Successful response */ {users: User[]};
-export type GetUserApiArg = void;
+export type GetUsersApiResponse = /** status 200 Successful response */ {
+  users?: User[];
+};
+export type GetUsersApiArg = void;
 export type User = {
   id?: number;
   name?: string;
