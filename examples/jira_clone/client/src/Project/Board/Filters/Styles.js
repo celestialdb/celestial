@@ -14,6 +14,11 @@ export const SearchInput = styled(InputDebounced)`
   width: 160px;
 `;
 
+export const SearchInput2 = styled.input`
+  margin-right: 18px;
+  width: 160px;
+`;
+
 export const Avatars = styled.div`
   display: flex;
   flex-direction: row-reverse;

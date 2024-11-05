@@ -5,35 +5,41 @@ import { Draggable } from 'react-beautiful-dnd';
 
 import { IssueTypeIcon, IssuePriorityIcon } from 'shared/components';
 
+import { useSelector } from 'react-redux';
+import { selectIssuesById, selectUsers, selectIssueAssigneesById } from 'celestial';
 import { IssueLink, Issue, Title, Bottom, Assignees, AssigneeAvatar } from './Styles';
 
 const propTypes = {
-  projectUsers: PropTypes.array.isRequired,
-  issue: PropTypes.object.isRequired,
   index: PropTypes.number.isRequired,
+  issueId: PropTypes.number.isRequired,
 };
 
-const ProjectBoardListIssue = ({ projectUsers, issue, index }) => {
+const ProjectBoardListIssue = ({ index, issueId }) => {
   const match = useRouteMatch();
 
-  const assignees = issue.userIds.map(userId => projectUsers.find(user => user.id === userId));
+  const issuex = useSelector(state => selectIssuesById(state, issueId) || {});
+  const assigneeIds =
+    useSelector(state => selectIssueAssigneesById(state, issueId) || {}).userIds || [];
+  // select users that match assigneeIds
+  const users = useSelector(state => selectUsers(state));
+  const assignees = Object.values(assigneeIds).map(id => users.find(user => user.id === id) || []);
 
   return (
-    <Draggable draggableId={issue.id.toString()} index={index}>
+    <Draggable draggableId={issueId.toString()} index={index}>
       {(provided, snapshot) => (
         <IssueLink
-          to={`${match.url}/issues/${issue.id}`}
+          to={`${match.url}/issues/${issuex.id}`}
           ref={provided.innerRef}
           data-testid="list-issue"
           {...provided.draggableProps}
           {...provided.dragHandleProps}
         >
           <Issue isBeingDragged={snapshot.isDragging && !snapshot.isDropAnimating}>
-            <Title>{issue.title}</Title>
+            <Title>{issuex.title}</Title>
             <Bottom>
               <div>
-                <IssueTypeIcon type={issue.type} />
-                <IssuePriorityIcon priority={issue.priority} top={-1} left={4} />
+                <IssueTypeIcon type={issuex.type} />
+                <IssuePriorityIcon priority={issuex.priority} top={-1} left={4} />
               </div>
               <Assignees>
                 {assignees.map(user => (

@@ -9,10 +9,11 @@ import {
   IssuePriorityCopy,
 } from 'shared/constants/issues';
 import toast from 'shared/utils/toast';
-import useApi from 'shared/hooks/api';
 import useCurrentUser from 'shared/hooks/currentUser';
 import { Form, IssueTypeIcon, Icon, Avatar, IssuePriorityIcon } from 'shared/components';
 
+import { useSelector } from 'react-redux';
+import { usePostIssuesMutation } from 'celestial';
 import {
   FormHeading,
   FormElement,
@@ -22,18 +23,21 @@ import {
   Actions,
   ActionButton,
 } from './Styles';
+import { selectProjectUsers } from '../../utils/selectors';
 
 const propTypes = {
   project: PropTypes.object.isRequired,
-  fetchProject: PropTypes.func.isRequired,
   onCreate: PropTypes.func.isRequired,
   modalClose: PropTypes.func.isRequired,
 };
 
-const ProjectIssueCreate = ({ project, fetchProject, onCreate, modalClose }) => {
-  const [{ isCreating }, createIssue] = useApi.post('/issues');
+const ProjectIssueCreate = ({ project, onCreate, modalClose }) => {
+  const [newIssue] = usePostIssuesMutation();
 
   const { currentUserId } = useCurrentUser();
+  const users = useSelector(selectProjectUsers) || [];
+
+  const userOptions = () => users.map(user => ({ value: user.id, label: user.name }));
 
   return (
     <Form
@@ -54,13 +58,14 @@ const ProjectIssueCreate = ({ project, fetchProject, onCreate, modalClose }) => 
       }}
       onSubmit={async (values, form) => {
         try {
-          await createIssue({
-            ...values,
-            status: IssueStatus.BACKLOG,
-            projectId: project.id,
-            users: values.userIds.map(id => ({ id })),
+          await newIssue({
+            issueInput: {
+              ...values,
+              status: IssueStatus.BACKLOG,
+              projectId: project.id,
+              users: values.userIds.map(id => ({ id })),
+            },
           });
-          await fetchProject();
           toast.success('Issue has been successfully created.');
           onCreate();
         } catch (error) {
@@ -92,18 +97,18 @@ const ProjectIssueCreate = ({ project, fetchProject, onCreate, modalClose }) => 
         <Form.Field.Select
           name="reporterId"
           label="Reporter"
-          options={userOptions(project)}
-          renderOption={renderUser(project)}
-          renderValue={renderUser(project)}
+          options={userOptions()}
+          renderOption={renderUser(users)}
+          renderValue={renderUser(users)}
         />
         <Form.Field.Select
           isMulti
           name="userIds"
           label="Assignees"
           tio="People who are responsible for dealing with this issue."
-          options={userOptions(project)}
-          renderOption={renderUser(project)}
-          renderValue={renderUser(project)}
+          options={userOptions()}
+          renderOption={renderUser(users)}
+          renderValue={renderUser(users)}
         />
         <Form.Field.Select
           name="priority"
@@ -114,7 +119,7 @@ const ProjectIssueCreate = ({ project, fetchProject, onCreate, modalClose }) => 
           renderValue={renderPriority}
         />
         <Actions>
-          <ActionButton type="submit" variant="primary" isWorking={isCreating}>
+          <ActionButton type="submit" variant="primary">
             Create Issue
           </ActionButton>
           <ActionButton type="button" variant="empty" onClick={modalClose}>
@@ -136,8 +141,6 @@ const priorityOptions = Object.values(IssuePriority).map(priority => ({
   label: IssuePriorityCopy[priority],
 }));
 
-const userOptions = project => project.users.map(user => ({ value: user.id, label: user.name }));
-
 const renderType = ({ value: type }) => (
   <SelectItem>
     <IssueTypeIcon type={type} top={1} />
@@ -152,8 +155,8 @@ const renderPriority = ({ value: priority }) => (
   </SelectItem>
 );
 
-const renderUser = project => ({ value: userId, removeOptionValue }) => {
-  const user = project.users.find(({ id }) => id === userId);
+const renderUser = users => ({ value: userId, removeOptionValue }) => {
+  const user = users.find(({ id }) => id === userId);
 
   return (
     <SelectItem

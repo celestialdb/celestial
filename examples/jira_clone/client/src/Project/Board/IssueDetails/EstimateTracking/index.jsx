@@ -4,6 +4,7 @@ import { isNil } from 'lodash';
 
 import { InputDebounced, Modal, Button } from 'shared/components';
 
+import { usePutIssuesByIssueIdMutation } from 'celestial/issuesData';
 import TrackingWidget from './TrackingWidget';
 import { SectionTitle } from '../Styles';
 import {
@@ -18,47 +19,54 @@ import {
 
 const propTypes = {
   issue: PropTypes.object.isRequired,
-  updateIssue: PropTypes.func.isRequired,
 };
 
-const ProjectBoardIssueDetailsEstimateTracking = ({ issue, updateIssue }) => (
-  <Fragment>
-    <SectionTitle>Original Estimate (hours)</SectionTitle>
-    {renderHourInput('estimate', issue, updateIssue)}
+// TODO: original estimate not working because put request failure error code 500
+const ProjectBoardIssueDetailsEstimateTracking = ({ issue }) => {
+  const [updateIssueCall] = usePutIssuesByIssueIdMutation();
 
-    <SectionTitle>Time Tracking</SectionTitle>
-    <Modal
-      testid="modal:tracking"
-      width={400}
-      renderLink={modal => (
-        <TrackingLink onClick={modal.open}>
-          <TrackingWidget issue={issue} />
-        </TrackingLink>
-      )}
-      renderContent={modal => (
-        <ModalContents>
-          <ModalTitle>Time tracking</ModalTitle>
-          <TrackingWidget issue={issue} />
-          <Inputs>
-            <InputCont>
-              <InputLabel>Time spent (hours)</InputLabel>
-              {renderHourInput('timeSpent', issue, updateIssue)}
-            </InputCont>
-            <InputCont>
-              <InputLabel>Time remaining (hours)</InputLabel>
-              {renderHourInput('timeRemaining', issue, updateIssue)}
-            </InputCont>
-          </Inputs>
-          <Actions>
-            <Button variant="primary" onClick={modal.close}>
-              Done
-            </Button>
-          </Actions>
-        </ModalContents>
-      )}
-    />
-  </Fragment>
-);
+  const updateIssue = async updatedFields => {
+    updateIssueCall({ issueId: issue.id, issueInput: updatedFields });
+  };
+  return (
+    <Fragment>
+      <SectionTitle>Original Estimate (hours)</SectionTitle>
+      {renderHourInput('estimate', issue, updateIssue)}
+
+      <SectionTitle>Time Tracking</SectionTitle>
+      <Modal
+        testid="modal:tracking"
+        width={400}
+        renderLink={modal => (
+          <TrackingLink onClick={modal.open}>
+            <TrackingWidget issue={issue} />
+          </TrackingLink>
+        )}
+        renderContent={modal => (
+          <ModalContents>
+            <ModalTitle>Time tracking</ModalTitle>
+            <TrackingWidget issue={issue} />
+            <Inputs>
+              <InputCont>
+                <InputLabel>Time spent (hours)</InputLabel>
+                {renderHourInput('timeSpent', issue, updateIssue)}
+              </InputCont>
+              <InputCont>
+                <InputLabel>Time remaining (hours)</InputLabel>
+                {renderHourInput('timeRemaining', issue, updateIssue)}
+              </InputCont>
+            </Inputs>
+            <Actions>
+              <Button variant="primary" onClick={modal.close}>
+                Done
+              </Button>
+            </Actions>
+          </ModalContents>
+        )}
+      />
+    </Fragment>
+  );
+};
 
 const renderHourInput = (fieldName, issue, updateIssue) => (
   <InputDebounced

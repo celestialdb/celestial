@@ -13,7 +13,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.jsx?$/,
+        test: /\.(js|jsx|ts)$/, // /\.jsx?$/,
         exclude: /node_modules/,
         use: ['babel-loader'],
       },
@@ -35,7 +35,7 @@ module.exports = {
   resolve: {
     // allows us to do absolute imports from "src"
     modules: [path.join(__dirname, 'src'), 'node_modules'],
-    extensions: ['*', '.js', '.jsx'],
+    extensions: ['*', '.js', '.jsx', '.ts', '.tsx'],
   },
   devtool: 'eval-source-map',
   devServer: {

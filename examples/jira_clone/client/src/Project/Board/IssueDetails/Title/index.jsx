@@ -4,16 +4,22 @@ import PropTypes from 'prop-types';
 import { KeyCodes } from 'shared/constants/keyCodes';
 import { is, generateErrors } from 'shared/utils/validation';
 
+import { usePutIssuesByIssueIdMutation } from 'celestial/issuesData';
 import { TitleTextarea, ErrorText } from './Styles';
 
 const propTypes = {
   issue: PropTypes.object.isRequired,
-  updateIssue: PropTypes.func.isRequired,
 };
 
-const ProjectBoardIssueDetailsTitle = ({ issue, updateIssue }) => {
+const ProjectBoardIssueDetailsTitle = ({ issue }) => {
   const $titleInputRef = useRef();
   const [error, setError] = useState(null);
+
+  const [updateIssueCall] = usePutIssuesByIssueIdMutation();
+
+  const updateIssue = async updatedFields => {
+    updateIssueCall({ issueId: issue.id, issueInput: updatedFields });
+  };
 
   const handleTitleChange = () => {
     setError(null);

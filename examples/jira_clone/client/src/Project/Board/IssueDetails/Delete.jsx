@@ -1,21 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import api from 'shared/utils/api';
 import toast from 'shared/utils/toast';
 import { Button, ConfirmModal } from 'shared/components';
+import { useDeleteIssuesByIssueIdMutation } from 'celestial/issuesData';
 
 const propTypes = {
   issue: PropTypes.object.isRequired,
-  fetchProject: PropTypes.func.isRequired,
   modalClose: PropTypes.func.isRequired,
 };
 
-const ProjectBoardIssueDetailsDelete = ({ issue, fetchProject, modalClose }) => {
+const ProjectBoardIssueDetailsDelete = ({ issue, modalClose }) => {
+  const [deleteIssue] = useDeleteIssuesByIssueIdMutation();
+
   const handleIssueDelete = async () => {
     try {
-      await api.delete(`/issues/${issue.id}`);
-      await fetchProject();
+      // await api.delete(`/issues/${issue.id}`);
+      // await fetchProject();
+      deleteIssue({ issueId: issue.id });
       modalClose();
     } catch (error) {
       toast.error(error);

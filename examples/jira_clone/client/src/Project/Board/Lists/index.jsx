@@ -1,36 +1,39 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { DragDropContext } from 'react-beautiful-dnd';
 
-import useCurrentUser from 'shared/hooks/currentUser';
-import api from 'shared/utils/api';
 import { moveItemWithinArray, insertItemIntoArray } from 'shared/utils/javascript';
 import { IssueStatus } from 'shared/constants/issues';
 
+import { useSelector } from 'react-redux';
+import { usePutIssuesByIssueIdMutation } from 'celestial';
 import List from './List';
 import { Lists } from './Styles';
+import { selectProjectIssues } from '../../../utils/selectors';
 
-const propTypes = {
-  project: PropTypes.object.isRequired,
-  filters: PropTypes.object.isRequired,
-  updateLocalProjectIssues: PropTypes.func.isRequired,
-};
-
-const ProjectBoardLists = ({ project, filters, updateLocalProjectIssues }) => {
-  const { currentUserId } = useCurrentUser();
+const ProjectBoardLists = () => {
+  const [updateIssue] = usePutIssuesByIssueIdMutation();
+  const issues = useSelector(state => selectProjectIssues(state)) || {};
 
   const handleIssueDrop = ({ draggableId, destination, source }) => {
     if (!isPositionChanged(source, destination)) return;
 
     const issueId = Number(draggableId);
 
-    api.optimisticUpdate(`/issues/${issueId}`, {
-      updatedFields: {
+    // api.optimisticUpdate(`/issues/${issueId}`, {
+    //   updatedFields: {
+    //     status: destination.droppableId,
+    //     listPosition: calculateIssueListPosition(project.issues, destination, source, issueId),
+    //   },
+    //   currentFields: project.issues.find(({ id }) => id === issueId),
+    //   setLocalData: fields => updateLocalProjectIssues(issueId, fields),
+    // });
+
+    updateIssue({
+      issueId,
+      issueInput: {
         status: destination.droppableId,
-        listPosition: calculateIssueListPosition(project.issues, destination, source, issueId),
+        listPosition: calculateIssueListPosition(issues, destination, source, issueId),
       },
-      currentFields: project.issues.find(({ id }) => id === issueId),
-      setLocalData: fields => updateLocalProjectIssues(issueId, fields),
     });
   };
 
@@ -38,13 +41,7 @@ const ProjectBoardLists = ({ project, filters, updateLocalProjectIssues }) => {
     <DragDropContext onDragEnd={handleIssueDrop}>
       <Lists>
         {Object.values(IssueStatus).map(status => (
-          <List
-            key={status}
-            status={status}
-            project={project}
-            filters={filters}
-            currentUserId={currentUserId}
-          />
+          <List key={status} status={status} />
         ))}
       </Lists>
     </DragDropContext>
@@ -91,7 +88,5 @@ const getAfterDropPrevNextIssue = (allIssues, destination, source, droppedIssueI
 
 const getSortedListIssues = (issues, status) =>
   issues.filter(issue => issue.status === status).sort((a, b) => a.listPosition - b.listPosition);
-
-ProjectBoardLists.propTypes = propTypes;
 
 export default ProjectBoardLists;

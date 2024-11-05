@@ -1,12 +1,16 @@
 import React, { Fragment, useState } from 'react';
 import PropTypes from 'prop-types';
 
-import api from 'shared/utils/api';
 import toast from 'shared/utils/toast';
 import { formatDateTimeConversational } from 'shared/utils/dateTime';
 import { ConfirmModal } from 'shared/components';
 
-import BodyForm from '../BodyForm';
+import { useSelector } from 'react-redux';
+import { selectUsersById } from 'celestial/usersData';
+import {
+  useDeleteCommentsByCommentIdMutation,
+  usePutCommentsByCommentIdMutation,
+} from 'celestial/commentsData';
 import {
   Comment,
   UserAvatar,
@@ -17,31 +21,38 @@ import {
   EditLink,
   DeleteLink,
 } from './Styles';
+import BodyForm from '../BodyForm';
 
 const propTypes = {
   comment: PropTypes.object.isRequired,
-  fetchIssue: PropTypes.func.isRequired,
 };
 
-const ProjectBoardIssueDetailsComment = ({ comment, fetchIssue }) => {
+const ProjectBoardIssueDetailsComment = ({ comment }) => {
   const [isFormOpen, setFormOpen] = useState(false);
   const [isUpdating, setUpdating] = useState(false);
   const [body, setBody] = useState(comment.body);
 
+  const commentUser = useSelector(state => selectUsersById(state, comment.userId)) || {};
+  const [updateComment] = usePutCommentsByCommentIdMutation();
+  const [deleteComment] = useDeleteCommentsByCommentIdMutation();
+
   const handleCommentDelete = async () => {
     try {
-      await api.delete(`/comments/${comment.id}`);
-      await fetchIssue();
+      // await api.delete(`/comments/${comment.id}`);
+      // await fetchIssue();
+      deleteComment({ commentId: comment.id });
     } catch (error) {
       toast.error(error);
     }
   };
 
+  // TODO: on pressing save, a text box showing editted commnet stays
   const handleCommentUpdate = async () => {
     try {
       setUpdating(true);
-      await api.put(`/comments/${comment.id}`, { body });
-      await fetchIssue();
+      // await api.put(`/comments/${comment.id}`, { body });
+      // await fetchIssue();
+      updateComment({ commentId: comment.id, commentInput: { body } });
       setUpdating(false);
       setFormOpen(false);
     } catch (error) {
@@ -51,9 +62,9 @@ const ProjectBoardIssueDetailsComment = ({ comment, fetchIssue }) => {
 
   return (
     <Comment data-testid="issue-comment">
-      <UserAvatar name={comment.user.name} avatarUrl={comment.user.avatarUrl} />
+      <UserAvatar name={commentUser.name} avatarUrl={commentUser.avatarUrl} />
       <Content>
-        <Username>{comment.user.name}</Username>
+        <Username>{commentUser.name}</Username>
         <CreatedAt>{formatDateTimeConversational(comment.createdAt)}</CreatedAt>
 
         {isFormOpen ? (

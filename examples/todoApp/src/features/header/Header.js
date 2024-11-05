@@ -1,12 +1,10 @@
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
 
-import { usePostTasksMutation } from '../../celestial/tasksData'
+import { usePostTasksMutation } from '../../celestial'
 
 const Header = () => {
   const [text, setText] = useState('')
   const [status, setStatus] = useState('idle')
-  const dispatch = useDispatch()
   const [addTask, { addTaskLoading }] = usePostTasksMutation()
 
   const handleChange = (e) => setText(e.target.value)

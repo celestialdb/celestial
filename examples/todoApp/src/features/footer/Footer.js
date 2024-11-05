@@ -1,12 +1,12 @@
 import React from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
 
 import { capitalize, StatusFilters } from '../../utils/utils'
-import { selectColors } from "../../celestial/colorsData";
-import {selectCache, updateCache} from "../../celestial/cache";
+import {selectColors} from "../../celestial";
+import {selectCache, useCacheUpdate} from "../../celestial";
 import {
     selectTasks, selectTasksIds, useDeleteTaskMutation, usePutTaskStatusMutation,
-} from '../../celestial/tasksData'
+} from '../../celestial'
 import {selectCompletedTodoIds} from "../../utils/selectors";
 
 const RemainingTodos = ({ count }) => {
@@ -44,7 +44,9 @@ const StatusFilter = ({ value: status, onChange }) => {
 }
 
 const ColorFilters = ({ value: colors, onChange }) => {
-  const renderedColors = useSelector(state => selectColors(state)).map((color) => {
+    // useSelector(state => selectColors(state))
+    // Object.values(useColors())
+  const renderedColors = Object.values(useSelector(selectColors)).map((color) => {
       const checked = colors.includes(color.id)
     const handleChange = () => {
       const changeType = checked ? 'removed' : 'added'
@@ -79,18 +81,15 @@ const ColorFilters = ({ value: colors, onChange }) => {
 }
 
 const Footer = () => {
-  const dispatch = useDispatch()
-    const [updateTaskStatus, { temp2 }]  = usePutTaskStatusMutation()
-    const [deleteTask, { temp3 }]  = useDeleteTaskMutation()
+  const cacheUpdate = useCacheUpdate()
+    const [updateTaskStatus]  = usePutTaskStatusMutation()
+        const [deleteTask]  = useDeleteTaskMutation()
     const todoIds = useSelector(state => selectTasksIds(state))
-    const completedTodoIds = useSelector((state) => selectCompletedTodoIds(state))
+    const completedTodoIds = useSelector(selectCompletedTodoIds)
+    const todos = useSelector(selectTasks) || {}
 
-  const todosRemaining = useSelector((state) => {
-    const uncompletedTodos = selectTasks(state).filter(
-      (todo) => todo.status !== StatusFilters.Completed
-    )
-    return uncompletedTodos.length
-  })
+  const todosRemainingTemp = Object.values(todos).filter((todo) => todo.status !== StatusFilters.Completed) || []
+    const todosRemaining = todosRemainingTemp.length
 
   const { status, colors } = useSelector((state) => selectCache(state))
 
@@ -105,7 +104,7 @@ const Footer = () => {
         })
   }
 
-  const onColorChange = (color, changeType) => {
+  const newColors = (color, changeType) => {
       let temp = colors
       if (changeType === "added") {
         temp = [...temp, color]
@@ -113,13 +112,21 @@ const Footer = () => {
       if (changeType === "removed") {
         temp = temp.filter((existingColor) => existingColor !== color)
       }
-      dispatch(updateCache("colors", temp))
+      return temp
   }
+
+    const onColorChange = (color, changeType) => {
+        if (changeType === 'added') {
+            cacheUpdate("colors", newColors(color, changeType))
+        }
+        if (changeType === 'removed') {
+            cacheUpdate("colors", newColors(color, changeType))
+        }
+    }
 
   const onStatusChange = (status) => {
-    dispatch(updateCache("status", status))
+      cacheUpdate("status", status)
   }
-
 
   return (
     <footer className="footer">
