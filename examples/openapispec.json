@@ -45,6 +45,7 @@
         "summary": "Get comments",
         "x-celestial-grouping": "comments",
         "x-celestial-index-endpoint": true,
+        "x-celestial-index-endpoint-by-key": "comment",
         "tags": [
           "Comments"
         ],
@@ -56,7 +57,7 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "issues": {
+                    "comment": {
                       "type": "array",
                       "items": {
                         "$ref": "#/components/schemas/Comment"
@@ -74,6 +75,7 @@
       "put": {
         "summary": "Update a comment",
         "x-celestial-grouping": "comments",
+        "x-celestial-updateByKey": "commentId",
         "tags": [
           "Comments"
         ],
@@ -113,6 +115,7 @@
       "delete": {
         "summary": "Delete a comment",
         "x-celestial-grouping": "comments",
+        "x-celestial-updateByKey": "commentId",
         "tags": [
           "Comments"
         ],
@@ -145,6 +148,7 @@
         "summary": "Get project issues",
         "x-celestial-grouping": "issues",
         "x-celestial-index-endpoint": true,
+        "x-celestial-index-endpoint-by-key": "issues",
         "tags": [
           "Issues"
         ],
@@ -203,6 +207,7 @@
       "put": {
         "summary": "Update an issue",
         "x-celestial-grouping": "issues",
+        "x-celestial-updateByKey": "issueId",
         "tags": [
           "Issues"
         ],
@@ -242,6 +247,7 @@
       "delete": {
         "summary": "Delete an issue",
         "x-celestial-grouping": "issues",
+        "x-celestial-updateByKey": "issueId",
         "tags": [
           "Issues"
         ],
@@ -274,6 +280,7 @@
         "summary": "Get projects",
         "x-celestial-index-endpoint": true,
         "x-celestial-grouping": "projects",
+        "x-celestial-index-endpoint-by-key": "projects",
         "tags": [
           "Projects"
         ],
@@ -283,7 +290,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Project"
+                  "$ref": "#/components/schemas/Projects"
                 }
               }
             }
@@ -293,6 +300,7 @@
       "put": {
         "summary": "Update a project",
         "x-celestial-grouping": "projects",
+        "x-celestial-updateByKey": "projectId",
         "tags": [
           "Projects"
         ],
@@ -323,10 +331,10 @@
     "/currentUser": {
       "get": {
         "summary": "Get current user",
-        "x-celestial-grouping": "users",
+        "x-celestial-grouping": "currentUser",
         "x-celestial-index-endpoint": true,
         "tags": [
-          "Users"
+          "currentUser"
         ],
         "responses": {
           "200": {
@@ -335,6 +343,87 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users": {
+      "get": {
+        "summary": "Get users",
+        "x-celestial-grouping": "users",
+        "x-celestial-index-endpoint": true,
+        "x-celestial-index-endpoint-by-key": "users",
+        "tags": [
+          "users"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties":{
+                    "users": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/User"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/issueAssignees": {
+      "get": {
+        "summary": "Get issue assignees",
+        "x-celestial-grouping": "issueAssignees",
+        "x-celestial-index-endpoint": true,
+        "x-celestial-index-endpoint-by-key": "issueAssignees",
+        "tags": [
+          "issueAssignees"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties":{
+                    "issueAssignees": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer"
+                          },
+                          "users": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "integer"
+                                }
+                              }
+                            }
+                          },
+                          "userIds": {
+                            "type": "integer"
+                          }
+                        }
+                      }
+                    }
+                  }
                 }
               }
             }
@@ -562,6 +651,17 @@
           "name",
           "category"
         ]
+      },
+      "Projects": {
+        "type": "array",
+        "properties":{
+          "projects": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Project"
+            }
+          }
+        }
       },
       "Project": {
         "type": "object",

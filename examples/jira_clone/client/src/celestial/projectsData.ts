@@ -1,15 +1,18 @@
-import { createEntityAdapter, Dictionary, EntityState } from "@reduxjs/toolkit";
+import { createEntityAdapter, EntityState } from "@reduxjs/toolkit";
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 const entityAdapter = createEntityAdapter();
-const initialState: EntityState<any> = entityAdapter.getInitialState();
+const initialState: EntityState<any> = entityAdapter.getInitialState({
+  ids: [],
+  entities: {},
+});
 export const projectsData = createApi({
   reducerPath: "projects",
   baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3000" }),
   tagTypes: ["Projects"],
   endpoints: (build) => ({
     getProject: build.query<EntityState<any>, GetProjectApiArg>({
-      query: () => ({ url: `/project`, headers: {Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjksImlhdCI6MTcyNTAzNzQ5NywiZXhwIjoxNzQwNTg5NDk3fQ.uj8Edcda52PVczeJn0KLXDu-XjzKMFMWJ2rH1uBThE4'} }),
+      query: () => ({ url: `/project` }),
       providesTags: ["Projects"],
       transformResponse: (responseData: GetProjectApiResponse) =>
         entityAdapter.setAll(initialState, responseData.projects),
@@ -19,7 +22,6 @@ export const projectsData = createApi({
         url: `/project`,
         method: "PUT",
         body: queryArg.projectInput,
-        headers: {Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjksImlhdCI6MTcyNTAzNzQ5NywiZXhwIjoxNzQwNTg5NDk3fQ.uj8Edcda52PVczeJn0KLXDu-XjzKMFMWJ2rH1uBThE4'}
       }),
       invalidatesTags: ["Projects"],
     }),
@@ -34,7 +36,7 @@ export const selectProjects = entrySelectors.selectAll;
 export const selectProjectsIds = entrySelectors.selectIds;
 export const selectProjectsById = entrySelectors.selectById;
 export type GetProjectApiResponse =
-  /** status 200 Successful response */ {projects: Project[]};
+  /** status 200 Successful response */ Projects;
 export type GetProjectApiArg = void;
 export type PutProjectApiResponse =
   /** status 200 Successful response */ Project;
@@ -49,6 +51,9 @@ export type Project = {
   category?: string;
   createdAt?: string;
   updatedAt?: string;
+};
+export type Projects = {
+  projects?: Project[];
 };
 export type ProjectInput = {
   name: string;

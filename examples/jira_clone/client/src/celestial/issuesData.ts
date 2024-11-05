@@ -1,16 +1,18 @@
-import { createEntityAdapter, Dictionary, EntityState } from "@reduxjs/toolkit";
+import { createEntityAdapter, EntityState } from "@reduxjs/toolkit";
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 const entityAdapter = createEntityAdapter();
-const initialState: EntityState<any> = entityAdapter.getInitialState({ids:[], entities:{}});
+const initialState: EntityState<any> = entityAdapter.getInitialState({
+  ids: [],
+  entities: {},
+});
 export const issuesData = createApi({
   reducerPath: "issues",
   baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3000" }),
   tagTypes: ["Issues"],
   endpoints: (build) => ({
     getIssues: build.query<EntityState<any>, GetIssuesApiArg>({
-      query: () => ({ url: `/issues`,
-        headers: {Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjksImlhdCI6MTcyNTAzNzQ5NywiZXhwIjoxNzQwNTg5NDk3fQ.uj8Edcda52PVczeJn0KLXDu-XjzKMFMWJ2rH1uBThE4'} }),
+      query: () => ({ url: `/issues` }),
       providesTags: ["Issues"],
       transformResponse: (responseData: GetIssuesApiResponse) =>
         entityAdapter.setAll(initialState, responseData.issues),
@@ -18,7 +20,6 @@ export const issuesData = createApi({
     postIssues: build.mutation<PostIssuesApiResponse, PostIssuesApiArg>({
       query: (queryArg) => ({
         url: `/issues`,
-        headers: {Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjksImlhdCI6MTcyNTAzNzQ5NywiZXhwIjoxNzQwNTg5NDk3fQ.uj8Edcda52PVczeJn0KLXDu-XjzKMFMWJ2rH1uBThE4'},
         method: "POST",
         body: queryArg.issueInput,
       }),
@@ -31,7 +32,6 @@ export const issuesData = createApi({
       query: (queryArg) => ({
         url: `/issues/${queryArg.issueId}`,
         method: "PUT",
-        headers: {Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjksImlhdCI6MTcyNTAzNzQ5NywiZXhwIjoxNzQwNTg5NDk3fQ.uj8Edcda52PVczeJn0KLXDu-XjzKMFMWJ2rH1uBThE4'},
         body: queryArg.issueInput,
       }),
       invalidatesTags: ["Issues"],
@@ -43,7 +43,6 @@ export const issuesData = createApi({
       query: (queryArg) => ({
         url: `/issues/${queryArg.issueId}`,
         method: "DELETE",
-        headers: {Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjksImlhdCI6MTcyNTAzNzQ5NywiZXhwIjoxNzQwNTg5NDk3fQ.uj8Edcda52PVczeJn0KLXDu-XjzKMFMWJ2rH1uBThE4'}
       }),
       invalidatesTags: ["Issues"],
     }),

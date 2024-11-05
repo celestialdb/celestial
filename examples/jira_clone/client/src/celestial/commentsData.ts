@@ -1,8 +1,11 @@
-import { createEntityAdapter, Dictionary, EntityState } from "@reduxjs/toolkit";
+import { createEntityAdapter, EntityState } from "@reduxjs/toolkit";
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 const entityAdapter = createEntityAdapter();
-const initialState: EntityState<any> = entityAdapter.getInitialState();
+const initialState: EntityState<any> = entityAdapter.getInitialState({
+  ids: [],
+  entities: {},
+});
 export const commentsData = createApi({
   reducerPath: "comments",
   baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3000" }),
@@ -13,12 +16,11 @@ export const commentsData = createApi({
         url: `/comments`,
         method: "POST",
         body: queryArg.commentInput,
-        headers: {Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjksImlhdCI6MTcyNTAzNzQ5NywiZXhwIjoxNzQwNTg5NDk3fQ.uj8Edcda52PVczeJn0KLXDu-XjzKMFMWJ2rH1uBThE4'}
       }),
       invalidatesTags: ["Comments"],
     }),
     getComments: build.query<EntityState<any>, GetCommentsApiArg>({
-      query: () => ({ url: `/comments`, headers: {Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjksImlhdCI6MTcyNTAzNzQ5NywiZXhwIjoxNzQwNTg5NDk3fQ.uj8Edcda52PVczeJn0KLXDu-XjzKMFMWJ2rH1uBThE4'} }),
+      query: () => ({ url: `/comments` }),
       providesTags: ["Comments"],
       transformResponse: (responseData: GetCommentsApiResponse) =>
         entityAdapter.setAll(initialState, responseData.comment),
@@ -31,7 +33,6 @@ export const commentsData = createApi({
         url: `/comments/${queryArg.commentId}`,
         method: "PUT",
         body: queryArg.commentInput,
-        headers: {Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjksImlhdCI6MTcyNTAzNzQ5NywiZXhwIjoxNzQwNTg5NDk3fQ.uj8Edcda52PVczeJn0KLXDu-XjzKMFMWJ2rH1uBThE4'}
       }),
       invalidatesTags: ["Comments"],
     }),
@@ -42,7 +43,6 @@ export const commentsData = createApi({
       query: (queryArg) => ({
         url: `/comments/${queryArg.commentId}`,
         method: "DELETE",
-        headers: {Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjksImlhdCI6MTcyNTAzNzQ5NywiZXhwIjoxNzQwNTg5NDk3fQ.uj8Edcda52PVczeJn0KLXDu-XjzKMFMWJ2rH1uBThE4'}
       }),
       invalidatesTags: ["Comments"],
     }),
