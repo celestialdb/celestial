@@ -28,7 +28,7 @@ export {
   selectCurrentUserById,
   selectCurrentUserIds,
 } from "./currentUserData";
-export {useGetCurrentUserQuery} from "./currentUserData";
+export { useGetCurrentUserQuery } from "./currentUserData";
 export { selectUsers, selectUsersById, selectUsersIds } from "./usersData";
 export { useGetUsersQuery } from "./usersData";
 export {
@@ -36,4 +36,4 @@ export {
   selectIssueAssigneesById,
   selectIssueAssigneesIds,
 } from "./issueAssigneesData";
-export {useGetIssueAssigneesQuery} from "./issueAssigneesData";
+export { useGetIssueAssigneesQuery } from "./issueAssigneesData";
