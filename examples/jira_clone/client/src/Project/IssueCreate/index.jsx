@@ -13,7 +13,7 @@ import useCurrentUser from 'shared/hooks/currentUser';
 import { Form, IssueTypeIcon, Icon, Avatar, IssuePriorityIcon } from 'shared/components';
 
 import { useSelector } from 'react-redux';
-import { usePostIssuesMutation } from 'celestial/issuesData';
+import { usePostIssuesMutation } from 'celestial';
 import {
   FormHeading,
   FormElement,

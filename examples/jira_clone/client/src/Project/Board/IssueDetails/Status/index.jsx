@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { IssueStatus, IssueStatusCopy } from 'shared/constants/issues';
 import { Select, Icon } from 'shared/components';
 
-import { usePutIssuesByIssueIdMutation } from 'celestial/issuesData';
+import { usePutIssuesByIssueIdMutation } from 'celestial';
 import { SectionTitle } from '../Styles';
 import { Status } from './Styles';
 

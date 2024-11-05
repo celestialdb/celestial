@@ -5,7 +5,7 @@ import { moveItemWithinArray, insertItemIntoArray } from 'shared/utils/javascrip
 import { IssueStatus } from 'shared/constants/issues';
 
 import { useSelector } from 'react-redux';
-import { usePutIssuesByIssueIdMutation } from 'celestial/issuesData';
+import { usePutIssuesByIssueIdMutation } from 'celestial';
 import List from './List';
 import { Lists } from './Styles';
 import { selectProjectIssues } from '../../../utils/selectors';

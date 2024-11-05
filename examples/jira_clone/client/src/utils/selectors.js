@@ -1,13 +1,15 @@
 import { createSelector } from '@reduxjs/toolkit';
 
-import { selectUsers } from 'celestial/usersData';
+import {
+  selectUsers,
+  selectCurrentUser,
+  selectProjects,
+  selectIssueAssigneesIds,
+  selectIssues,
+  selectCache,
+} from 'celestial';
 import { intersection } from 'lodash';
 import moment from 'moment/moment';
-import { selectCurrentUser } from 'celestial/currentUserData';
-import { selectProjects } from 'celestial/projectsData';
-import { selectIssueAssigneesIds } from 'celestial/issueAssigneesData';
-import { selectIssues } from 'celestial/issuesData';
-import { selectCache } from 'celestial/cache';
 
 export const selectCurrentProject = createSelector(
   selectCurrentUser,

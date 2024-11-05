@@ -6,9 +6,7 @@ import { Draggable } from 'react-beautiful-dnd';
 import { IssueTypeIcon, IssuePriorityIcon } from 'shared/components';
 
 import { useSelector } from 'react-redux';
-import { selectIssuesById } from 'celestial/issuesData';
-import { selectUsers } from 'celestial/usersData';
-import { selectIssueAssigneesById } from 'celestial/issueAssigneesData';
+import { selectIssuesById, selectUsers, selectIssueAssigneesById } from 'celestial';
 import { IssueLink, Issue, Title, Bottom, Assignees, AssigneeAvatar } from './Styles';
 
 const propTypes = {

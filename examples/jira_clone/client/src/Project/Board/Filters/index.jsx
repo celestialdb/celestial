@@ -1,7 +1,7 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
-import { selectCache, updateCache } from 'celestial/cache';
+import { selectCache, useCacheUpdate } from 'celestial';
 import { PageLoader } from 'shared/components';
 import { defaultFilters } from 'utils/filters';
 import { selectProjectUsers } from 'utils/selectors';
@@ -20,7 +20,7 @@ const Search = ({ searchTerm, updateSearchTerm }) => {
 };
 
 const ProjectBoardFilters = () => {
-  const dispatch = useDispatch();
+  const updateCache = useCacheUpdate();
 
   const projectUsers = useSelector(state => selectProjectUsers(state)) || [];
 
@@ -49,7 +49,7 @@ const ProjectBoardFilters = () => {
     console.log('--- new search term: ', tempFilters);
     tempFilters.searchTerm = e.target.value;
     console.log('--- new search term2: ', tempFilters);
-    dispatch(updateCache('filters', tempFilters));
+    updateCache('filters', tempFilters);
   };
 
   function updateUserIds(value) {
@@ -64,23 +64,23 @@ const ProjectBoardFilters = () => {
     }
     const tempFilters = { ...filters };
     tempFilters.userIds = tempFilterUsers;
-    dispatch(updateCache('filters', tempFilters));
+    updateCache('filters', tempFilters);
   }
 
   function updateMyOnly(value) {
     const tempFilters = { ...filters };
     tempFilters.myOnly = value;
-    dispatch(updateCache('filters', tempFilters));
+    updateCache('filters', tempFilters);
   }
 
   function updateRecent(value) {
     const tempFilters = { ...filters };
     tempFilters.recent = value;
-    dispatch(updateCache('filters', tempFilters));
+    updateCache('filters', tempFilters);
   }
 
   function resetFilters() {
-    dispatch(updateCache('filters', defaultFilters));
+    updateCache('filters', defaultFilters);
   }
 
   return (

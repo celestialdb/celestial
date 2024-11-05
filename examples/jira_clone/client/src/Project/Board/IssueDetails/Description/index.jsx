@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { getTextContentsFromHtmlString } from 'shared/utils/browser';
 import { TextEditor, TextEditedContent, Button } from 'shared/components';
 
-import { usePutIssuesByIssueIdMutation } from 'celestial/issuesData';
+import { usePutIssuesByIssueIdMutation } from 'celestial';
 import { Title, EmptyLabel, Actions } from './Styles';
 
 const propTypes = {

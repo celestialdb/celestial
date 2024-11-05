@@ -7,7 +7,7 @@ import { sortByNewest } from 'shared/utils/javascript';
 import { IssueTypeIcon } from 'shared/components';
 
 import { useSelector } from 'react-redux';
-import { selectIssues } from 'celestial/issuesData';
+import { selectIssues } from 'celestial';
 import NoResultsSVG from './NoResultsSvg';
 import {
   IssueSearch,
