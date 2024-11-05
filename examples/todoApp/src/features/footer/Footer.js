@@ -82,8 +82,8 @@ const ColorFilters = ({ value: colors, onChange }) => {
 
 const Footer = () => {
   const cacheUpdate = useCacheUpdate()
-    const [updateTaskStatus, { temp2 }]  = usePutTaskStatusMutation()
-        const [deleteTask, { temp3 }]  = useDeleteTaskMutation()
+    const [updateTaskStatus]  = usePutTaskStatusMutation()
+        const [deleteTask]  = useDeleteTaskMutation()
     const todoIds = useSelector(state => selectTasksIds(state))
     const completedTodoIds = useSelector(selectCompletedTodoIds)
     const todos = useSelector(selectTasks) || {}

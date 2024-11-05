@@ -23,9 +23,9 @@ const TodoListItem = ({ id }) => {
   useGetColorsQuery()
   const allColors = useSelector(selectColors) || []
 
-  const [updateTaskColor, { temp1 }] = usePutTaskColorMutation()
-  const [updateTaskStatus, { temp2 }]  = usePutTaskStatusMutation()
-  const [deleteTask, { temp3 }]  = useDeleteTaskMutation()
+  const [updateTaskColor] = usePutTaskColorMutation()
+  const [updateTaskStatus]  = usePutTaskStatusMutation()
+  const [deleteTask]  = useDeleteTaskMutation()
 
   const handleCompletedChanged = (e) => {
     const newStatus = e.target.checked ? 1 : 3
