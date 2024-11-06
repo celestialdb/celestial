@@ -2,7 +2,10 @@ import { createEntityAdapter, EntityState } from "@reduxjs/toolkit";
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 const entityAdapter = createEntityAdapter();
-const initialState: EntityState<any> = entityAdapter.getInitialState();
+const initialState: EntityState<any> = entityAdapter.getInitialState({
+  ids: [],
+  entities: {},
+});
 export const tasksData = createApi({
   reducerPath: "tasks",
   baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:5001" }),
@@ -54,7 +57,10 @@ export const tasksData = createApi({
           tasksData.util.updateQueryData("getTasks", undefined, (cache) => {
             const replacement = cache.entities[patch.updateTaskColor.task_id];
             Object.assign(replacement, patch.updateTaskColor);
-            Object.assign(cache.entities, replacement);
+            Object.assign(
+              cache.entities[patch.updateTaskColor.task_id],
+              replacement,
+            );
           }),
         );
       },
@@ -74,7 +80,10 @@ export const tasksData = createApi({
           tasksData.util.updateQueryData("getTasks", undefined, (cache) => {
             const replacement = cache.entities[patch.updateTaskStatus.task_id];
             Object.assign(replacement, patch.updateTaskStatus);
-            Object.assign(cache.entities, replacement);
+            Object.assign(
+              cache.entities[patch.updateTaskStatus.task_id],
+              replacement,
+            );
           }),
         );
       },

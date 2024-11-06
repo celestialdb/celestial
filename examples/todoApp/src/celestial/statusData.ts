@@ -2,7 +2,10 @@ import { createEntityAdapter, EntityState } from "@reduxjs/toolkit";
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 const entityAdapter = createEntityAdapter();
-const initialState: EntityState<any> = entityAdapter.getInitialState();
+const initialState: EntityState<any> = entityAdapter.getInitialState({
+  ids: [],
+  entities: {},
+});
 export const statusData = createApi({
   reducerPath: "status",
   baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:5001" }),
