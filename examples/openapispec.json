@@ -75,7 +75,7 @@
       "put": {
         "summary": "Update a comment",
         "x-celestial-grouping": "comments",
-        "x-celestial-updateByKey": "commentId",
+        "x-celestial-updateByKey": "parameters.commentId",
         "tags": [
           "Comments"
         ],
@@ -115,7 +115,7 @@
       "delete": {
         "summary": "Delete a comment",
         "x-celestial-grouping": "comments",
-        "x-celestial-updateByKey": "commentId",
+        "x-celestial-updateByKey": "parameters.commentId",
         "tags": [
           "Comments"
         ],
@@ -207,7 +207,7 @@
       "put": {
         "summary": "Update an issue",
         "x-celestial-grouping": "issues",
-        "x-celestial-updateByKey": "issueId",
+        "x-celestial-updateByKey": "parameters.issueId",
         "tags": [
           "Issues"
         ],
@@ -247,7 +247,7 @@
       "delete": {
         "summary": "Delete an issue",
         "x-celestial-grouping": "issues",
-        "x-celestial-updateByKey": "issueId",
+        "x-celestial-updateByKey": "parameters.issueId",
         "tags": [
           "Issues"
         ],
@@ -300,7 +300,7 @@
       "put": {
         "summary": "Update a project",
         "x-celestial-grouping": "projects",
-        "x-celestial-updateByKey": "projectId",
+        "x-celestial-updateByKey": "requestBody.projectId",
         "tags": [
           "Projects"
         ],
@@ -634,6 +634,9 @@
       "ProjectInput": {
         "type": "object",
         "properties": {
+          "projectId": {
+            "type": "integer"
+          },
           "name": {
             "type": "string"
           },
@@ -649,7 +652,8 @@
         },
         "required": [
           "name",
-          "category"
+          "category",
+          "projectId"
         ]
       },
       "Projects": {
