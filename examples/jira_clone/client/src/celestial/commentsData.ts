@@ -12,6 +12,19 @@ export const commentsData = createApi({
   tagTypes: ["Comments"],
   endpoints: (build) => ({
     postComments: build.mutation<PostCommentsApiResponse, PostCommentsApiArg>({
+      async onQueryStarted({ ...patch }, { dispatch, queryFulfilled }) {
+        dispatch(
+          commentsData.util.updateQueryData(
+            "getComments",
+            undefined,
+            (cache) => {
+              Object.assign(patch.commentInput, { id: 0 });
+              Object.assign(cache.entities, { 0: patch.commentInput });
+              cache.ids.push(0);
+            },
+          ),
+        );
+      },
       query: (queryArg) => ({
         url: `/comments`,
         method: "POST",
@@ -29,6 +42,19 @@ export const commentsData = createApi({
       PutCommentsByCommentIdApiResponse,
       PutCommentsByCommentIdApiArg
     >({
+      async onQueryStarted({ ...patch }, { dispatch, queryFulfilled }) {
+        dispatch(
+          commentsData.util.updateQueryData(
+            "getComments",
+            undefined,
+            (cache) => {
+              const replacement = cache.entities[patch.commentId];
+              Object.assign(replacement, patch.commentInput);
+              Object.assign(cache.entities[patch.commentId], replacement);
+            },
+          ),
+        );
+      },
       query: (queryArg) => ({
         url: `/comments/${queryArg.commentId}`,
         method: "PUT",
@@ -40,6 +66,19 @@ export const commentsData = createApi({
       DeleteCommentsByCommentIdApiResponse,
       DeleteCommentsByCommentIdApiArg
     >({
+      async onQueryStarted({ ...patch }, { dispatch, queryFulfilled }) {
+        dispatch(
+          commentsData.util.updateQueryData(
+            "getComments",
+            undefined,
+            (cache) => {
+              const index = cache.ids.indexOf(patch.commentId);
+              cache.ids.splice(index, 1);
+              delete cache.entities[patch.commentId];
+            },
+          ),
+        );
+      },
       query: (queryArg) => ({
         url: `/comments/${queryArg.commentId}`,
         method: "DELETE",

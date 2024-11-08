@@ -27,6 +27,6 @@ export const getProjectWithUsersAndIssues = catchErrors(async (req, res) => {
 });
 
 export const update = catchErrors(async (req, res) => {
-  const project = await updateEntity(Project, req.currentUser.projectId, req.body);
+  const project = await updateEntity(Project, req.body.projectId, req.body);
   res.respond({ project });
 });
