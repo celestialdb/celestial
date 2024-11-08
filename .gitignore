@@ -4,6 +4,8 @@ node_modules/*
 examples/todoApp/node_modules/*
 examples/jira_clone/.vscode/*
 examples/jira_clone/node_modules/*
+examples/shopping_cart/node_modules/*
+examples/shopping_cart/client/node_modules/*
 
 .idea/*
 
@@ -12,5 +14,4 @@ examples/jira_clone/node_modules/*
 lib/*
 
 package-lock.json
-examples/jira_clone/client/yarn.lock
 examples/jira_clone/client/yarn.lock
