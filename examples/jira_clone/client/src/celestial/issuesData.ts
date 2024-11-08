@@ -18,6 +18,15 @@ export const issuesData = createApi({
         entityAdapter.setAll(initialState, responseData.issues),
     }),
     postIssues: build.mutation<PostIssuesApiResponse, PostIssuesApiArg>({
+      async onQueryStarted({ ...patch }, { dispatch, queryFulfilled }) {
+        dispatch(
+          issuesData.util.updateQueryData("getIssues", undefined, (cache) => {
+            Object.assign(patch.issueInput, { id: 0 });
+            Object.assign(cache.entities, { 0: patch.issueInput });
+            cache.ids.push(0);
+          }),
+        );
+      },
       query: (queryArg) => ({
         url: `/issues`,
         method: "POST",
@@ -29,6 +38,15 @@ export const issuesData = createApi({
       PutIssuesByIssueIdApiResponse,
       PutIssuesByIssueIdApiArg
     >({
+      async onQueryStarted({ ...patch }, { dispatch, queryFulfilled }) {
+        dispatch(
+          issuesData.util.updateQueryData("getIssues", undefined, (cache) => {
+            const replacement = cache.entities[patch.issueId];
+            Object.assign(replacement, patch.issueInput);
+            Object.assign(cache.entities[patch.issueId], replacement);
+          }),
+        );
+      },
       query: (queryArg) => ({
         url: `/issues/${queryArg.issueId}`,
         method: "PUT",
@@ -40,6 +58,15 @@ export const issuesData = createApi({
       DeleteIssuesByIssueIdApiResponse,
       DeleteIssuesByIssueIdApiArg
     >({
+      async onQueryStarted({ ...patch }, { dispatch, queryFulfilled }) {
+        dispatch(
+          issuesData.util.updateQueryData("getIssues", undefined, (cache) => {
+            const index = cache.ids.indexOf(patch.issueId);
+            cache.ids.splice(index, 1);
+            delete cache.entities[patch.issueId];
+          }),
+        );
+      },
       query: (queryArg) => ({
         url: `/issues/${queryArg.issueId}`,
         method: "DELETE",

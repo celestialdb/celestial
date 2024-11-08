@@ -18,6 +18,22 @@ export const projectsData = createApi({
         entityAdapter.setAll(initialState, responseData.projects),
     }),
     putProject: build.mutation<PutProjectApiResponse, PutProjectApiArg>({
+      async onQueryStarted({ ...patch }, { dispatch, queryFulfilled }) {
+        dispatch(
+          projectsData.util.updateQueryData(
+            "getProject",
+            undefined,
+            (cache) => {
+              const replacement = cache.entities[patch.projectInput.projectId];
+              Object.assign(replacement, patch.projectInput);
+              Object.assign(
+                cache.entities[patch.projectInput.projectId],
+                replacement,
+              );
+            },
+          ),
+        );
+      },
       query: (queryArg) => ({
         url: `/project`,
         method: "PUT",
@@ -56,6 +72,7 @@ export type Projects = {
   projects?: Project[];
 };
 export type ProjectInput = {
+  projectId: number;
   name: string;
   url?: string;
   description?: string;
