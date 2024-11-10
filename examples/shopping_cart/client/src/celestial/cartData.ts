@@ -13,6 +13,7 @@ export const cartData = createApi({
   endpoints: (build) => ({
     getCart: build.query<GetCartApiResponse, GetCartApiArg>({
       query: () => ({ url: `/cart` }),
+      providesTags: ["cart"],
     }),
     getCartItems: build.query<EntityState<any>, GetCartItemsApiArg>({
       query: () => ({ url: `/cart/items` }),

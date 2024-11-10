@@ -12,8 +12,8 @@ export const inventoryData = createApi({
   tagTypes: ["inventory"],
   endpoints: (build) => ({
     getInventory: build.query<EntityState<any>, GetInventoryApiArg>({
-      providesTags: ["inventory"],
       query: () => ({ url: `/inventory` }),
+      providesTags: ["inventory"],
       transformResponse: (responseData: GetInventoryApiResponse) =>
         entityAdapter.setAll(initialState, responseData),
     }),

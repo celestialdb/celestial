@@ -14,6 +14,7 @@
     "/inventory": {
       "get": {
         "summary": "Get inventory",
+        "tags": ["inventory"],
         "x-celestial-grouping": "inventory",
         "x-celestial-index-endpoint": true,
         "operationId": "getInventory",
@@ -47,6 +48,7 @@
     "/cart": {
       "get": {
         "summary": "Get cart details",
+        "tags": ["cart"],
         "x-celestial-grouping": "cart",
         "operationId": "getCart",
         "responses": {
@@ -80,6 +82,7 @@
       "get": {
         "summary": "Get cart items",
         "x-celestial-grouping": "cart",
+        "tags": ["cart"],
         "x-celestial-index-endpoint": true,
         "x-celestial-index-endpoint-by-key": "cart",
         "operationId": "getCartItems",
@@ -97,7 +100,8 @@
                         "$ref": "#/components/schemas/CartLineitem"
                       }
                     }
-                  }
+                  },
+                  "required": ["cart"]
                 }
               }
             }
@@ -118,6 +122,7 @@
     "/cart/{action}": {
       "put": {
         "summary": "Add or remove item in cart",
+        "tags": ["cart"],
         "x-celestial-grouping": "cart",
         "x-celestial-updateByKey": "requestBody.item_id",
         "operationId": "putCartAction",
