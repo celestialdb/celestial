@@ -1,13 +1,14 @@
 import React from 'react'
+import {useSelector} from "react-redux";
+import {cartTotal} from "../utils/selectors";
 
 export const CartSummary = () => {
-    const data = 0;
-
+    const data = 0// useSelector(cartTotal);
 
 
     return (
         <div>
-            ${data}
+            <h2>$ {data}</h2>
         </div>
     );
 }

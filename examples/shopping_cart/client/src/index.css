@@ -1,7 +1,7 @@
 * {
   box-sizing: border-box;
   margin: 0;
-  padding: 0;
+  padding: 10px;
 }
 
 html, body {
@@ -19,7 +19,7 @@ html, body {
 
 .left {
   width: 65%;
-  background-color: #fcccff; /* Example background color */
+  background-color: #D3D3D3; /* Example background color */
 }
 
 .right {
@@ -30,23 +30,23 @@ html, body {
 
 .right-top {
   height: 20%;
-  background-color: #dcdcdc; /* Example background color */
+  background-color: #b7c6de; /* Example background color */
 }
 
 .right-bottom {
   height: 80%;
-  background-color: #bcbcf1; /* Example background color */
+  background-color: #C0C0C0; /* Example background color */
 }
 
 .circle {
-  width: 20px;
-  height: 20px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
-  background-color: #ff0000; /* Example background color */
+  background-color: #8A9A5B; /* Example background color */
   display: flex;
   align-items: center;
   justify-content: center;
   color: #ffffff; /* Example text color */
   font-size: 12px;
-  margin-left: 10px;
+  margin-left: 15px;
 }

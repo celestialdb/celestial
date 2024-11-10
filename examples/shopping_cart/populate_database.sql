@@ -27,6 +27,6 @@ INSERT INTO inventory(name, price) VALUES
 ('bread', 3),
 ('butter', 8);
 
-INSERT INTO cart(cart_total) VALUES(2),
+INSERT INTO cart(cart_total) VALUES(2);
 
 INSERT INTO cart_lineitem(cart_id, item_id, quantity) VALUES(1, 1, 1);
