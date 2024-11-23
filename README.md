@@ -3,6 +3,7 @@
 <!-- <h1 padding=0px>$\mathbf{\mathbf{\mathbf{\textcolor{black}{Managed} \space \textcolor{#764abc}{Redux \space Toolkit}}}}$</h1> -->
 <h2 padding=0px>$\mathbf{Auto-generate \space RTK \space definitions \space from \space your \space OpenAPI \space Spec}$</h2>
 </div>
+
 ###
 
 Celestial generates RTK definitions for your backend with built-in support for caching and optimistic updates.
