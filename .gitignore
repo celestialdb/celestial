@@ -16,3 +16,4 @@ lib/*
 package-lock.json
 examples/jira_clone/client/yarn.lock
 examples/shopping_cart/.idea/*
+examples/shopping_cart/client/src/react-app-env.d.ts
