@@ -41,7 +41,7 @@
     ]
   },
   "devDependencies": {
-    "@celestial-labs/celestial": "^0.1.3",
+    "@celestial-labs/celestial": "1.0.0",
     "prettier": "^2.0.2"
   }
 }
