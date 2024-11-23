@@ -16,7 +16,7 @@
   * [Performing mutations](#performing-mutations)
   * [State Management](#state-management)
 
-**For usage with an example, see [here]().**
+**For usage with an example, see [here](https://github.com/celestialdb/celestial/tree/main/docs/example.md).**
 
 # Caveats
 

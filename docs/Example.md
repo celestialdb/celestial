@@ -2,22 +2,22 @@
 
 ## On this page
 
-* [A TODO App]()
-  * [Backend APIs]()
-* [Generated RTK Definitions]()
-  * [Generated Query Hooks]()
-  * [Generated Mutation Hooks]()
-  * [Cache Structure]()
-  * [Default Selectors]()
-* [Usage]()
-  * [Connect your React app ]()
-  * [State Management]()
-    * [Initializing Cache]()
-    * [Accessing cached data]()
-    * [Updating cache]()
-  * [Performing Updates]()
-  * [Data Fetching and display]()
-  * [Combing data to suit component]()
+* [A TODO App](https://github.com/celestialdb/celestial/tree/main/docs/tab=readme-ov-file#a-todo-app)
+  * [Backend APIs](https://github.com/celestialdb/celestial/tree/main/docs/tab=readme-ov-file#backend-apis)
+* [Generated RTK Definitions](https://github.com/celestialdb/celestial/tree/main/docs/tab=readme-ov-file#generated-rtk-definitions)
+  * [Generated Query Hooks](https://github.com/celestialdb/celestial/tree/main/docs/tab=readme-ov-file#generated-query-hooks)
+  * [Generated Mutation Hooks](https://github.com/celestialdb/celestial/tree/main/docs/tab=readme-ov-file#generated-mutation-hooks)
+  * [Default Selectors](https://github.com/celestialdb/celestial/tree/main/docs/tab=readme-ov-file#default-selectors)
+  * [Cache Structure](https://github.com/celestialdb/celestial/tree/main/docs/tab=readme-ov-file#cache-structure)
+* [Usage](https://github.com/celestialdb/celestial/tree/main/docs/tab=readme-ov-file#usage)
+  * [Connect your React app ](https://github.com/celestialdb/celestial/tree/main/docs/tab=readme-ov-file#connect-your-react-app)
+  * [State Management](https://github.com/celestialdb/celestial/tree/main/docs/tab=readme-ov-file#state-management)
+    * [Initializing Cache](https://github.com/celestialdb/celestial/tree/main/docs/tab=readme-ov-file#initializing-cache)
+    * [Accessing cached data](https://github.com/celestialdb/celestial/tree/main/docs/tab=readme-ov-file#accessing-cached-data)
+    * [Updating cache](https://github.com/celestialdb/celestial/tree/main/docs/tab=readme-ov-file#updating-cache)
+  * [Data Fetching and display](https://github.com/celestialdb/celestial/tree/main/docs/tab=readme-ov-file#data-fetching-and-display)
+  * [Performing Updates](https://github.com/celestialdb/celestial/tree/main/docs/tab=readme-ov-file#performing-updates)
+  * [Combing data to suit component](https://github.com/celestialdb/celestial/tree/main/docs/tab=readme-ov-file#combing-data-to-suit-component)
   
 
 
@@ -77,7 +77,7 @@ Since the colors and status collections don't have update endpoints, no mutation
 
 ## Default Selectors
 
-Data fetched from the API calls is provided to the application using **Selectors**. Selectors is RTK's functionality to perform computations. You can think about them as functions. Read more about Selectors [here]().
+Data fetched from the API calls is provided to the application using **Selectors**. Selectors is RTK's functionality to perform computations. You can think about them as functions. Read more about Selectors [here](https://redux-toolkit.js.org/api/createSelector).
 
 Three selectors are generated for each **collection** of endpoints. Celestial requires that endpoints be grouped into **collections** based on the server resource each endpoint accesses. For ex. `/tasks` and `task/color` endpoints are grouped into the `tasks` collection; and `/colors` and `/colors/color_id` (if this endpoint existed) are grouped into the `colors` collection. Read more about collections [here]().
 

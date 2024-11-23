@@ -4,8 +4,6 @@
 <h2 padding=0px>$\mathbf{Auto-generate \space RTK \space definitions \space from \space your \space OpenAPI \space Spec}$</h2>
 </div>
 
-###
-
 Celestial generates RTK definitions for your backend with built-in support for caching and optimistic updates.
 
 In other words, Celestial provides simple query and mutation hooks to interact with your backend with built-in support for caching and optimistic updates.
@@ -46,18 +44,19 @@ const onStatusChange = (status) => {
 
 ## On this page
 * [What is Celestial](https://github.com/celestialdb/celestial/tree/main?tab=readme-ov-file#what-is-celestial)
+* [Acknowledgements](https://github.com/celestialdb/celestial/tree/main?tab=readme-ov-file#acknowledgements)
+* [Code Samples](https://github.com/celestialdb/celestial/tree/main?tab=readme-ov-file#code-samples)
+  * [ToDo App](https://github.com/celestialdb/celestial/tree/main?tab=readme-ov-file#todo-app)
+  * [Jira Clone](https://github.com/celestialdb/celestial/tree/main?tab=readme-ov-file#jira-clone)
+  * [Shopping App](https://github.com/celestialdb/celestial/tree/main?tab=readme-ov-file#shopping-app)
 * [Usage](https://github.com/celestialdb/celestial/tree/main?tab=readme-ov-file#usage)
   * [Installation](https://github.com/celestialdb/celestial/tree/main?tab=readme-ov-file#installation)
+  * [Annotate the OpenAPI Spec](https://github.com/celestialdb/celestial/tree/main?tab=readme-ov-file#annotate-the-openapi-spec)
   * [Generate RTK Definitions](https://github.com/celestialdb/celestial/tree/main?tab=readme-ov-file#generate-rtk-definitions)
   * [Connect your app](https://github.com/celestialdb/celestial/tree/main?tab=readme-ov-file#connect-your-app)
   * [Data fetching and injecting data in components](https://github.com/celestialdb/celestial/tree/main?tab=readme-ov-file#data-fetching-and-injecting-data-in-components)
   * [Performing mutations](https://github.com/celestialdb/celestial/tree/main?tab=readme-ov-file#performing-mutations)
   * [State Management](https://github.com/celestialdb/celestial/tree/main?tab=readme-ov-file#state-management)
-* [Acknowledgements](https://github.com/celestialdb/celestial/tree/main?tab=readme-ov-file#acknowledgements)
-* [Features](https://github.com/celestialdb/celestial/tree/main?tab=readme-ov-file#features)
-* [Code Samples](https://github.com/celestialdb/celestial/tree/main?tab=readme-ov-file#code-samples)
-  * [ToDo App](https://github.com/celestialdb/celestial/tree/main?tab=readme-ov-file#todo-app)
-  * [Jira Clone](https://github.com/celestialdb/celestial/tree/main?tab=readme-ov-file#jira-clone)
 
 
 # What is Celestial
@@ -78,6 +77,19 @@ Think of Celestial as a unified data layer on the frontend that contains your en
 # Acknowledgements
 
 Celestial relies heavily on Redux and its tooling. We extend our gratitude to the authors and maintainers for not only making these tools open source but also tirelessly tending the community since inception.
+
+
+# Code Samples
+
+## ToDo App
+See [ToDo App](https://github.com/celestialdb/celestial/tree/main/examples/todoApp).
+
+## Jira Clone
+See [Jira Clone](https://github.com/celestialdb/celestial/tree/main/examples/jira_clone).
+
+## Shopping App
+See [Shopping App](https://github.com/celestialdb/celestial/tree/main/examples/shopping_cart).
+
 
 # Usage
 
@@ -181,19 +193,3 @@ cacheUpdate("stateVar2", "newValue")
 ```
 
 You don't have to write your actions and reducers. Simply define your functions and add cacheUpdate at the end with the state var name and the key to update.
-
-
-
-
-# Code Samples
-
-## ToDo App
-
-
-
-## Jira Clone
-
-
-
-## Online Shopping App
-
