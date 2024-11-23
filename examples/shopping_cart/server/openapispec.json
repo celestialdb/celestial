@@ -119,23 +119,22 @@
         }
       }
     },
-    "/cart/{action}": {
+    "/cart/add/{item_id}": {
       "put": {
-        "summary": "Add or remove item in cart",
+        "summary": "Add item to cart",
         "tags": ["cart"],
         "x-celestial-grouping": "cart",
-        "x-celestial-updateByKey": "requestBody.item_id",
-        "operationId": "putCartAction",
+        "x-celestial-updateByKey": "parameters.itemId",
+        "operationId": "putCartAdd",
         "parameters": [
           {
-            "name": "action",
+            "name": "item_id",
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string",
-              "enum": ["add", "remove"]
+              "type": "integer"
             },
-            "description": "Action to perform on the cart (add or remove an item)"
+            "description": "Item id to add"
           }
         ],
         "requestBody": {
@@ -145,12 +144,86 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "item_id": {
+                  "quantity": {
                     "type": "integer",
-                    "description": "ID of the item to add or remove"
+                    "description": "New quantity of the item_id"
                   }
                 },
-                "required": ["item_id"]
+                "required": ["quantity"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Action performed successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid action",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/cart/remove/{item_id}": {
+      "put": {
+        "summary": "Remove item from cart",
+        "tags": ["cart"],
+        "x-celestial-grouping": "cart",
+        "x-celestial-updateByKey": "parameters.itemId",
+        "operationId": "putCartRemove",
+        "parameters": [
+          {
+            "name": "item_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Item id to remove"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "quantity": {
+                    "type": "integer",
+                    "description": "New quantity of the item_id"
+                  }
+                },
+                "required": ["quantity"]
               }
             }
           }
@@ -226,12 +299,6 @@
         "type": "object",
         "properties": {
           "id": {
-            "type": "integer"
-          },
-          "cart_id": {
-            "type": "integer"
-          },
-          "item_id": {
             "type": "integer"
           },
           "quantity": {

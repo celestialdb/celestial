@@ -67,7 +67,7 @@ def get_cart():
 @cross_origin()
 def get_cart_items():
     cart_lineitems = CartLineitem.query.filter(CartLineitem.cart_id == CARTID).all()
-    return {"cart": [{'id': item.id, 'cart_id': item.cart_id, 'item_id': item.item_id, 'quantity': item.quantity} for item in cart_lineitems]}
+    return {"cart": [{'id': item.item_id, 'quantity': item.quantity} for item in cart_lineitems]}
 
 def add_item_to_cart(item_id):
     cart_item = db.session.execute(select(CartLineitem).where(CartLineitem.cart_id == CARTID)
@@ -111,15 +111,38 @@ def remove_item_to_cart(item_id):
     db.session.commit()
     return jsonify({'message': 'Item removed from cart successfully'})
 
-@app.route('/cart/<action>', methods=['PUT'])
+def modify_cart(item_id, quantity, action):
+    if quantity <= 0:
+        db.session.execute(
+            delete(CartLineitem)
+            .where(CartLineitem.cart_id == CARTID, CartLineitem.item_id == item_id)
+        )
+    elif quantity == 1:
+        new_cart_item = CartLineitem(cart_id=CARTID, item_id=item_id, quantity=1)
+        db.session.add(new_cart_item)
+    else:
+        db.session.execute(
+            update(CartLineitem)
+            .where(CartLineitem.cart_id == CARTID, CartLineitem.item_id == item_id)
+            .values(quantity=quantity)
+        )
+
+    item_price = db.session.execute(select(Inventory.price).where(Inventory.id == item_id)).scalar_one()
+    if (action == 'add'):
+        db.session.query(Cart).filter(Cart.id == CARTID).update({'cart_total': Cart.cart_total + item_price})
+    else:
+        db.session.query(Cart).filter(Cart.id == CARTID).update({'cart_total': Cart.cart_total - item_price})
+        
+    db.session.commit()
+    return jsonify({'message': 'Item quantity updated'})
+
+@app.route('/cart/<action>/<item_id>', methods=['PUT'])
 @cross_origin()
-def put_cart(action):
+def put_cart(action, item_id):
     # get the task details from the request
-    print(action, request.get_json())
-    if action == 'add':
-        return add_item_to_cart(request.get_json()['item_id'])
-    elif action == 'remove':
-        return remove_item_to_cart(request.get_json()['item_id'])
+    print(action, item_id, request.get_json())
+    if action == 'add' or action == 'remove':
+        return modify_cart(item_id, request.get_json()['quantity'], action)
     else:
         return(jsonify({'Invalid Action'}), 400)
 

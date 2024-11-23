@@ -11,7 +11,7 @@ export const selectCartItemsDetails = createSelector(
         }
 
         return cart.map(item => {
-            const itemDetails = inventory.find(i => i.id === item.item_id)
+            const itemDetails = inventory.find(i => i.id === item.id)
             return {...item, ...itemDetails}
         })
     }

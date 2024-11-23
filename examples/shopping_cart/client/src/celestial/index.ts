@@ -9,5 +9,6 @@ export { selectCart, selectCartById, selectCartIds } from "./cartData";
 export {
   useGetCartQuery,
   useGetCartItemsQuery,
-  usePutCartActionMutation,
+  usePutCartAddMutation,
+  usePutCartRemoveMutation,
 } from "./cartData";

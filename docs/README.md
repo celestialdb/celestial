@@ -106,7 +106,7 @@ First, annotate your open api spec with celestial related information
 * `tags`,*required, string[]*: This should be the same as the endpoint's `x-celestial-grouping`, only in array form. See example 1.
 * `x-celestial-index-endpoint`, *boolean*: This is where you define the endpoint that must be cached. One GET endpoint in each collection must have this set to true. This endpoint must have a primary key column called`id`. See example 1.
 * `x-celestial-index-endpoint-by-key`, *string*: This is where you define the key of the response JSON object where data to be cached will be present. By default the entire response object will be cached. Only required for endpoints which have the `x-celestial-index-endpoint` set. See example 1.
-* `x-celestial-updateByKey`, *string*: When you perform an update, you send the primary key of the resource to update to the backend, along with other information. This is the location of the primary key of the resource being updated. If the primary key is present in `parameters`, just specify the primary key. If the primary key is present in the `requestBody`, specify `requestBody.primaryKey`. This must be the same as the `id` column returned by `x-celeted-index-endpoint`. Required for PUT and DELETE endpoints. See example 2.
+* `x-celestial-updateByKey`, *string*: When you perform an update, you send the primary key of the resource to update to the backend, along with other information. This is the location of the primary key of the resource being updated. If the primary key is present in `parameters`, specify `parameters.camelCase(primaryKey)`. If the primary key is present in the `requestBody`, specify `requestBody.primaryKey`. This must be the same as the `id` column returned by `x-celeted-index-endpoint`. Required for PUT and DELETE endpoints. See example 2.
 
 #### Example 1.
 
@@ -154,7 +154,7 @@ First, annotate your open api spec with celestial related information
         "summary": "Add or remove item in cart",
         "tags": ["cart"],
         "x-celestial-grouping": "cart",
-        "x-celestial-updateByKey": "requestBody.item_id", // only `item_id` if item_id was a part of parameters
+        "x-celestial-updateByKey": "requestBody.item_id", // or `parameters.itemId`: note the camelCase
         "operationId": "putCartAction",
         "parameters": [
           {

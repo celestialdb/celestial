@@ -21,21 +21,41 @@ export const cartData = createApi({
       transformResponse: (responseData: GetCartItemsApiResponse) =>
         entityAdapter.setAll(initialState, responseData.cart),
     }),
-    putCartAction: build.mutation<
-      PutCartActionApiResponse,
-      PutCartActionApiArg
-    >({
+    putCartAdd: build.mutation<PutCartAddApiResponse, PutCartAddApiArg>({
       async onQueryStarted({ ...patch }, { dispatch, queryFulfilled }) {
         dispatch(
           cartData.util.updateQueryData("getCartItems", undefined, (cache) => {
-            const replacement = cache.entities[patch.body.item_id];
+            const replacement = cache.entities[patch.itemId];
+            if (replacement===undefined) {
+              return
+            }
             Object.assign(replacement, patch.body);
-            Object.assign(cache.entities[patch.body.item_id], replacement);
+            Object.assign(cache.entities[patch.itemId], replacement);
           }),
         );
       },
       query: (queryArg) => ({
-        url: `/cart/${queryArg.action}`,
+        url: `/cart/add/${queryArg.itemId}`,
+        method: "PUT",
+        body: queryArg.body,
+      }),
+      invalidatesTags: ["cart"],
+    }),
+    putCartRemove: build.mutation<
+      PutCartRemoveApiResponse,
+      PutCartRemoveApiArg
+    >({
+      async onQueryStarted({ ...patch }, { dispatch, queryFulfilled }) {
+        dispatch(
+          cartData.util.updateQueryData("getCartItems", undefined, (cache) => {
+            const replacement = cache.entities[patch.itemId];
+            Object.assign(replacement, patch.body);
+            Object.assign(cache.entities[patch.itemId], replacement);
+          }),
+        );
+      },
+      query: (queryArg) => ({
+        url: `/cart/remove/${queryArg.itemId}`,
         method: "PUT",
         body: queryArg.body,
       }),
@@ -57,16 +77,28 @@ export type GetCartItemsApiResponse = /** status 200 Cart items */ {
   cart: CartLineitem[];
 };
 export type GetCartItemsApiArg = void;
-export type PutCartActionApiResponse =
+export type PutCartAddApiResponse =
   /** status 200 Action performed successfully */ {
     message?: string;
   };
-export type PutCartActionApiArg = {
-  /** Action to perform on the cart (add or remove an item) */
-  action: "add" | "remove";
+export type PutCartAddApiArg = {
+  /** Item id to add */
+  itemId: number;
   body: {
-    /** ID of the item to add or remove */
-    item_id: number;
+    /** New quantity of the item_id */
+    quantity: number;
+  };
+};
+export type PutCartRemoveApiResponse =
+  /** status 200 Action performed successfully */ {
+    message?: string;
+  };
+export type PutCartRemoveApiArg = {
+  /** Item id to remove */
+  itemId: number;
+  body: {
+    /** New quantity of the item_id */
+    quantity: number;
   };
 };
 export type Cart = {
@@ -78,12 +110,11 @@ export type Error = {
 };
 export type CartLineitem = {
   id?: number;
-  cart_id?: number;
-  item_id?: number;
   quantity?: number;
 };
 export const {
   useGetCartQuery,
   useGetCartItemsQuery,
-  usePutCartActionMutation,
+  usePutCartAddMutation,
+  usePutCartRemoveMutation,
 } = cartData;

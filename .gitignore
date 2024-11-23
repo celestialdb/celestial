@@ -15,6 +15,4 @@ lib/*
 
 package-lock.json
 examples/jira_clone/client/yarn.lock
-examples/shopping_cart/.idea/vcs.xml
-examples/shopping_cart/.idea/shopping_cart.iml
-examples/shopping_cart/.idea/modules.xml
+examples/shopping_cart/.idea/*
