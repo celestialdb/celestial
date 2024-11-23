@@ -16,7 +16,7 @@
   * [Performing mutations](#performing-mutations)
   * [State Management](#state-management)
 
-**For usage with an example, see [here](https://github.com/celestialdb/celestial/tree/main/docs/example.md).**
+**For usage with an example, see [here](https://github.com/celestialdb/celestial/tree/main/docs/Example.md).**
 
 # Caveats
 
@@ -44,7 +44,7 @@ For each of the `PUT`, `POST` and `DELETE` endpoints, a `usePlaceholderMutation(
 
 Data fetched from the API calls is provided to the application using **Selectors**. Selectors is RTK's functionality to perform computations. You can think about them as functions. Read more about Selectors [here](https://redux.js.org/usage/deriving-data-selectors#calculating-derived-data-with-selectors).
 
-Celestial generated three default selectors for each [**collection**]() of endpoints:
+Celestial generated three default selectors for each [**collection**](#collections) of endpoints:
 
 1. `selectCollection` which returns an array of all items fetched for this collection. More details about this below.
 2. `selectCollectionById` which returns an item by id.
@@ -102,11 +102,11 @@ npm install @celestial-labs/celestial --save-dev
 
 First, annotate your open api spec with celestial related information
 
-* `x-celestial-grouping`, *required, string*: This is where you define the endpoint's collection. When any endpoint in a collection sees an update, data for all other endpoints in the collection will be refetched automatically. See example 1.
-* `tags`,*required, string[]*: This should be the same as the endpoint's `x-celestial-grouping`, only in array form. See example 1.
-* `x-celestial-index-endpoint`, *boolean*: This is where you define the endpoint that must be cached. One GET endpoint in each collection must have this set to true. This endpoint must have a primary key column called`id`. See example 1.
-* `x-celestial-index-endpoint-by-key`, *string*: This is where you define the key of the response JSON object where data to be cached will be present. By default the entire response object will be cached. Only required for endpoints which have the `x-celestial-index-endpoint` set. See example 1.
-* `x-celestial-updateByKey`, *string*: When you perform an update, you send the primary key of the resource to update to the backend, along with other information. This is the location of the primary key of the resource being updated. If the primary key is present in `parameters`, specify `parameters.camelCase(primaryKey)`. If the primary key is present in the `requestBody`, specify `requestBody.primaryKey`. This must be the same as the `id` column returned by `x-celeted-index-endpoint`. Required for PUT and DELETE endpoints. See example 2.
+* `x-celestial-grouping`, *required, string*: This is where you define the endpoint's collection. When any endpoint in a collection sees an update, data for all other endpoints in the collection will be refetched automatically. See [example 1](#example-1).
+* `tags`,*required, string[]*: This should be the same as the endpoint's `x-celestial-grouping`, only in array form. See [example 1](#example-1).
+* `x-celestial-index-endpoint`, *boolean*: This is where you define the endpoint that must be cached. One GET endpoint in each collection must have this set to true. This endpoint must have a primary key column called`id`. See [example 1](#example-1).
+* `x-celestial-index-endpoint-by-key`, *string*: This is where you define the key of the response JSON object where data to be cached will be present. By default, the entire response object will be cached. Only required for endpoints which have the `x-celestial-index-endpoint` set. See [example 1](#example-1).
+* `x-celestial-updateByKey`, *string*: When you perform an update, you send the primary key of the resource to update to the backend, along with other information. This is the location of the primary key of the resource being updated. If the primary key is present in `parameters`, specify `parameters.camelCase(primaryKey)`. If the primary key is present in the `requestBody`, specify `requestBody.primaryKey`. This must be the same as the `id` column returned by `x-celeted-index-endpoint`. Required for PUT and DELETE endpoints. See [example 2](#example-2).
 
 #### Example 1.
 

@@ -43,20 +43,20 @@ const onStatusChange = (status) => {
 ```
 
 ## On this page
-* [What is Celestial](https://github.com/celestialdb/celestial/tree/main?tab=readme-ov-file#what-is-celestial)
-* [Acknowledgements](https://github.com/celestialdb/celestial/tree/main?tab=readme-ov-file#acknowledgements)
-* [Code Samples](https://github.com/celestialdb/celestial/tree/main?tab=readme-ov-file#code-samples)
-  * [ToDo App](https://github.com/celestialdb/celestial/tree/main?tab=readme-ov-file#todo-app)
-  * [Jira Clone](https://github.com/celestialdb/celestial/tree/main?tab=readme-ov-file#jira-clone)
-  * [Shopping App](https://github.com/celestialdb/celestial/tree/main?tab=readme-ov-file#shopping-app)
-* [Usage](https://github.com/celestialdb/celestial/tree/main?tab=readme-ov-file#usage)
-  * [Installation](https://github.com/celestialdb/celestial/tree/main?tab=readme-ov-file#installation)
-  * [Annotate the OpenAPI Spec](https://github.com/celestialdb/celestial/tree/main?tab=readme-ov-file#annotate-the-openapi-spec)
-  * [Generate RTK Definitions](https://github.com/celestialdb/celestial/tree/main?tab=readme-ov-file#generate-rtk-definitions)
-  * [Connect your app](https://github.com/celestialdb/celestial/tree/main?tab=readme-ov-file#connect-your-app)
-  * [Data fetching and injecting data in components](https://github.com/celestialdb/celestial/tree/main?tab=readme-ov-file#data-fetching-and-injecting-data-in-components)
-  * [Performing mutations](https://github.com/celestialdb/celestial/tree/main?tab=readme-ov-file#performing-mutations)
-  * [State Management](https://github.com/celestialdb/celestial/tree/main?tab=readme-ov-file#state-management)
+* [What is Celestial](#what-is-celestial)
+* [Acknowledgements](#acknowledgements)
+* [Code Samples](#code-samples)
+  * [ToDo App](#todo-app)
+  * [Jira Clone](#jira-clone)
+  * [Shopping App](#shopping-app)
+* [Usage](#usage)
+  * [Installation](#installation)
+  * [Annotate the OpenAPI Spec](#annotate-the-openapi-spec)
+  * [Generate RTK Definitions](#generate-rtk-definitions)
+  * [Connect your app](#connect-your-app)
+  * [Data fetching and injecting data in components](#data-fetching-and-injecting-data-in-components)
+  * [Performing mutations](#performing-mutations)
+  * [State Management](#state-management)
 
 
 # What is Celestial
