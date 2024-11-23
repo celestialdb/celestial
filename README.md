@@ -3,19 +3,13 @@
 <!-- <h1 padding=0px>$\mathbf{\mathbf{\mathbf{\textcolor{black}{Managed} \space \textcolor{#764abc}{Redux \space Toolkit}}}}$</h1> -->
 <h2 padding=0px>$\mathbf{Auto-generate \space RTK \space definitions \space from \space your \space OpenAPI \space Spec}$</h2>
 </div>
-
 ###
 
 Celestial generates RTK definitions for your backend with built-in support for caching and optimistic updates.
 
 In other words, Celestial provides simple query and mutation hooks to interact with your backend with built-in support for caching and optimistic updates.
 
-You only have to do the following:
-```bash
-npm install @celestial-labs/celestial --save-dev
-npx celestial openApi.json ./src/celestial
-```
-
+You get to directly use query and mutation hooks without writing any of the logic:
 ```js
 // call the hooks
 useGetColorsQuery()
@@ -26,9 +20,7 @@ const todo = useSelector(selectTasksById(id))
 const todoColor = useSelector(selectColorsById(todo.colorId))
 const allColors = useSelector(selectColors)
 ```
-No need to write data fetching, reducers, action creators, selectors, middleware, store configuration.
-
-Updating the backend is just as simple:
+Updates are just as simple:
 ```js
 const [ addTask ] = usePostTasksMutation()
 
@@ -53,7 +45,6 @@ const onStatusChange = (status) => {
 
 ## On this page
 * [What is Celestial](https://github.com/celestialdb/celestial/tree/main?tab=readme-ov-file#what-is-celestial)
-* [DX with Celestial](https://github.com/celestialdb/celestial/tree/main?tab=readme-ov-file#dx-with-celestial)
 * [Usage](https://github.com/celestialdb/celestial/tree/main?tab=readme-ov-file#usage)
   * [Installation](https://github.com/celestialdb/celestial/tree/main?tab=readme-ov-file#installation)
   * [Generate RTK Definitions](https://github.com/celestialdb/celestial/tree/main?tab=readme-ov-file#generate-rtk-definitions)
@@ -75,7 +66,7 @@ const onStatusChange = (status) => {
 **By generating your RTK definitions, Celestial wraps away the complexity of Redux Toolkit, exposing an intuitive hook-based interface for declarative server interaction and simplified state management.**
 
 
-> * Auto-generated query and mutation hooks for your backend with built in support for caching and optimistic update, and auto-syncing of client state with the server. 
+> * Auto-generated query and mutation hooks for your backend with built-in support for caching and optimistic update, and auto-syncing of client state with the server. 
 > * All the power of Redux minus the boiler-plate and learning curve. Throw in any kind of state, structured however you want and manipulate it by simply calling `updateCache(stateVar, stateVarNewVal)`. 
 > * Combine and tailor your data to your frontend models and access it via hook-based API. Derived state is cached and memoized by default. Changes to source state cascade down to the derived state including optimistic updates. 
 > * Celestial acts as a unified state container for your entire UI state, guaranteeing deterministic state transitions for a consistent, bug-free UX.
@@ -83,7 +74,9 @@ const onStatusChange = (status) => {
 
 Think of Celestial as a unified data layer on the frontend that contains your entire UI state and manages sync with the backend. It exposes hook-based API for you to plug into and declaratively manage data flow throughout your app, giving you an easy DX and consistent UX.
 
-# DX with Celestial
+# Acknowledgements
+
+Celestial relies heavily on Redux and its tooling. We extend our gratitude to the authors and maintainers for not only making these tools open source but also tirelessly tending the community since inception.
 
 # Usage
 
@@ -92,12 +85,25 @@ Think of Celestial as a unified data layer on the frontend that contains your en
 npm install @celestial-labs/celestial --save-dev
 ```
 
+## Annotate the OpenAPI Spec
+
+Add the following information to your Open API spec:
+
+* `x-celestial-grouping`
+* `tags`
+* `x-celestial-index-endpoint`
+* `x-celestial-index-endpoint-by-key`
+* `x-celestial-updateByKey`
+
+Read more [here]().
+
 ## Generate RTK Definitions
+
 ```bash
 npx celestial openAPISpec.json outputPath
 ```
 
-## Generated RTK Definitions??
+You can see all the hooks and selectors you have available in `outputPath/index.js`.
 
 ## Connect your app
 ```js
@@ -114,8 +120,8 @@ ReactDOM.render(
 
 ## Data fetching and injecting data in components
 ```js
-import { selectColors, selectColorsById, useGetColorsQuery} from "../../celestial/colorsData";
-import { selectTasksById } from '../../celestial/tasksData'
+import { selectColors, selectColorsById, useGetColorsQuery} from "./celestial";
+import { selectTasksById } from './celestial'
 
 // call hook at the top of the component
 // this will issue GET on the /colors endpoint
@@ -130,9 +136,11 @@ const allColors = useSelector(selectColors)
 ```
 > Notice the pattern between the name of query hooks and their corresponding endpoint. Read more [here]().
 
+You don't have to write the data fetching code or handle failure cases. 
+
 ## Performing mutations
 ```js
-import { usePostTasksMutation } from '../../celestial/tasksData'
+import { usePostTasksMutation } from './celestial'
 
 // call hook at the top of the component
 // this will issue a POST on /tasks endpoint
@@ -143,23 +151,25 @@ addTask({newTask: {text: trimmedText}})
 ```
 > Notice the pattern between the name of mutation hook and the endpoint. Read more [here]().
 
+You don't have to write the code to update the backend. When the backend is updated, by default, everywhere this data is being used is updated as well, without you having to write refetch logic yourself.
+
 ## State Management
 ```js
-import { useCacheInit } from "./celestial/cache"
+import { useCacheInit } from "./celestial"
 
 useCacheInituseCacheInit("stateVar1",[]);
 useCacheInit("stateVar2","stateVarVal");
 ```
 
 ```js
-import { selectCache } from "../../celestial/cache";
+import { selectCache } from "./celestial";
 
 // anywhere in your component
 const { stateVars } = useSelector(selectCache)
 ```
 
 ```js
-import { useCacheUpdate } from "../../celestial/cache";
+import { useCacheUpdate } from "./celestial";
 
 // at the top of your component to abide by rules of React Hooks
 const cacheUpdate = useCacheUpdate()
@@ -169,12 +179,20 @@ cacheUpdate("stateVar1", ['a'])
 cacheUpdate("stateVar2", "newValue")
 ```
 
-# Acknowledgements
-Celestial relies heavily on Redux and its tooling. We extend our gratitude to the authors and maintainers for not only making these tools open source but also tirelessly tending the community since inception.
+You don't have to write your actions and reducers. Simply define your functions and add cacheUpdate at the end with the state var name and the key to update.
+
+
 
 
 # Code Samples
 
 ## ToDo App
 
+
+
 ## Jira Clone
+
+
+
+## Online Shopping App
+

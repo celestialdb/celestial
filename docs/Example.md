@@ -41,13 +41,13 @@ The app provides additional buttons (far left), a counter (mid-left) and filteri
 
 The backend provides the following APIs that the frontend must integrate. 
 
-1. GET on /tasks: returns all the tasks in the database
-2. POST on /tasks: for creating a new task
-3. PUT on /task/color: for updating the color of a task
-4. PUT on /task/status: for updating the status of a task
-5. DELETE on /task: for deleting a task
-6. GET on /colors: returns all possible colors a task can have
-7. GET on /status: returns all possible status a task can have
+1. `GET /tasks:` returns all the tasks in the database
+2. `POST /tasks`: for creating a new task
+3. `PUT /task/color`: for updating the color of a task
+4. `PUT /task/status`: for updating the status of a task
+5. `DELETE /task`: for deleting a task
+6. `GET /colors`: returns all possible colors a task can have
+7. `GET /status`: returns all possible status a task can have
 
 # Generated RTK Definitions
 
@@ -71,17 +71,15 @@ For each POST, PUT and DELETE endpoints, a mutation hook is generated.
   * usePutTaskStatusMutation(): Performs a PUT on /task/status
   * useDeleteTaskMutation(): Performs a DELETE on /task
 
-Since the colors and status collections don't have update endpoints, no mutation hooks are generated for these collections either.
-
 > Notice the pattern between the names of the hooks and their corresponding endpoints. Read more [here]().
+
+Since the colors and status collections don't have update endpoints, no mutation hooks are generated for these collections either.
 
 ## Default Selectors
 
 Data fetched from the API calls is provided to the application using **Selectors**. Selectors is RTK's functionality to perform computations. You can think about them as functions. Read more about Selectors [here]().
 
-Three selectors are generated for each **collection** of endpoints. Celestial groups endpoints into **collections** based on the server resource each endpoint accesses. For ex. `/tasks` and `task/color` endpoints are grouped into the `tasks` collection; and `/colors` and `/colors/color_id` (if this endpoint existed) are grouped into the `colors` collection. Read more about collections [here]().
-
-// Add a note
+Three selectors are generated for each **collection** of endpoints. Celestial requires that endpoints be grouped into **collections** based on the server resource each endpoint accesses. For ex. `/tasks` and `task/color` endpoints are grouped into the `tasks` collection; and `/colors` and `/colors/color_id` (if this endpoint existed) are grouped into the `colors` collection. Read more about collections [here]().
 
 For the ToDo app, the following default selectors are generated:
 
@@ -100,9 +98,9 @@ For the ToDo app, the following default selectors are generated:
 
 ## Cache Structure
 
-RTK caches the response of API calls in the Redux store. The data from a given API call (query hook) will be cached in the Redux store under the hook's (endpoint's) **collection** name. 
+RTK normalizes and caches the response of API calls in the Redux store. The data from a given API call (query hook) will be cached in the Redux store under the hook's (endpoint's) **collection** name. 
 
-The following is the structure of the data cached on frontend. The `cache` key stores any local UI state. All other keys store data fetched from the backend.
+The following is the structure of the data cached on frontend. The `cache` key stores any local UI state you may want to store. All other keys store data fetched from the backend.
 
 ```json
 {
@@ -145,7 +143,7 @@ ReactDOM.render(
 ### Initializing Cache
 
 ```js
-import { useCacheInit } from "./celestial/cache"
+import { useCacheInit } from "./celestial"
 
 useCacheInit("colors",[]);
 useCacheInit("status", { All: 'all', Active: 3, Completed: 1,});
@@ -154,7 +152,7 @@ useCacheInit("status", { All: 'all', Active: 3, Completed: 1,});
 ### Accessing cached data
 
 ```js
-import { selectCache } from "../../celestial/cache";
+import { selectCache } from "./celestial";
 
 const { status } = useSelector(selectCache)
 ```
@@ -162,7 +160,7 @@ const { status } = useSelector(selectCache)
 ### Updating cache
 
 ```js
-import { useCacheUpdate } from "../../celestial/cache";
+import { useCacheUpdate } from "./celestial";
 
 // at the top of the component
 const cacheUpdate = useCacheUpdate()
@@ -176,8 +174,8 @@ const onStatusChange = (status) => {
 ## Data Fetching and display
 
 ```js
-import { selectColors, selectColorsById, useGetColorsQuery} from "../../celestial/colorsData";
-import { selectTasksById } from '../../celestial/tasksData'
+import { selectColors, selectColorsById, useGetColorsQuery} from "./celestial";
+import { selectTasksById } from './celestial'
 
 // call hook at the top of the component
 // this will issue GET on the /colors endpoint
@@ -194,7 +192,7 @@ const allColors = useSelector(selectColors)
 ## Performing Updates
 
 ```js
-import { usePostTasksMutation } from '../../celestial/tasksData'
+import { usePostTasksMutation } from "./celestial"
 
 // call hook at the top of the component
 const [ addTask ] = usePostTasksMutation()
