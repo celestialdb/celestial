@@ -1,8 +1,5 @@
 #!/usr/bin/env node
-
-
 import { generateRTKDefs } from '@celestial-labs/codegen-openapi';
-
 
 import fs from 'fs';
 
@@ -10,15 +7,6 @@ if (process.argv.length < 4) {
     console.log("Usage: node index.js <openApiSpecFile> <destinationFolder>")
     process.exit(1)
 }
-
-// const openApiSpecFile = "/Users/kriti/celestial/ex/code-gen-test/examples/jira_clone/openapispec.json"
-// const destinationFolder = "/Users/kriti/celestial/ex/code-gen-test/examples/jira_clone/client/src/celestial"
-
-// const openApiSpecFile = "/Users/kriti/celestial/ex/code-gen-test/examples/shopping_cart/server/openapispec.json"
-// const destinationFolder = "/Users/kriti/celestial/ex/code-gen-test/examples/shopping_cart/client/src/celestial"
-
-// const openApiSpecFile = "/Users/kriti/celestial/ex/celestial-server/open_api_spec.json"
-// const destinationFolder = "/Users/kriti/celestial/ex/code-gen-test/examples/todoApp/src/celestial"
 
 const openApiSpecFile = process.argv[2]
 const destinationFolder = process.argv[3]
