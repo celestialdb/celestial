@@ -1,6 +1,6 @@
 import React from 'react'
 import {useSelector} from "react-redux";
-import {cartItemsDetails} from "../utils/selectors";
+import {selectCartItemsDetails} from "../utils/selectors";
 import {capitalize} from "../utils/utils";
 
 const CartItem = ({item})=> {
@@ -12,11 +12,10 @@ const CartItem = ({item})=> {
             <span className="circle">${item.price * item.quantity}</span>
         </div>
     )
-
 }
 
 export const Cart = () => {
-    const data = [] // useSelector(cartItemsDetails) || []
+    const data = useSelector(selectCartItemsDetails) || [];
 
     if (data.length===0) {
         return ( <div>Cart is empty</div>)

@@ -1,22 +1,22 @@
 import React from 'react'
 import {
-    selectInventory, useCacheUpdate,
+    selectInventory,
     usePutCartActionMutation
 } from "../celestial";
-import {useSelector} from "react-redux";
 import {capitalize} from "../utils/utils";
+import {useSelector} from "react-redux";
 
 export const Inventory = () => {
-    const [modifyCart] = usePutCartActionMutation()
+    const [modifyCart] = usePutCartActionMutation();
 
-    const data = [] // useSelector(selectInventory) || []
+    const data = useSelector(selectInventory) || [];
 
     const addToCart = (item) => {
         modifyCart({action: 'add', body: {item_id: item.id}})
     }
 
     const removeFromCart = (item) => {
-        modifyCart({action: 'remove', body: {item_id: item.id}})
+          modifyCart({action: 'remove', body: {item_id: item.id}})
     }
 
     return (

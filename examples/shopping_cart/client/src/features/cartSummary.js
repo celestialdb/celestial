@@ -3,8 +3,7 @@ import {useSelector} from "react-redux";
 import {cartTotal} from "../utils/selectors";
 
 export const CartSummary = () => {
-    const data = 0// useSelector(cartTotal);
-
+    const data =useSelector(cartTotal);
 
     return (
         <div>

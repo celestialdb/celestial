@@ -1,7 +1,8 @@
 import {createSelector} from "reselect";
 import {selectCart, selectInventory} from "../celestial";
 
-export const cartItemsDetails = createSelector(
+// selector to add item details to cart items
+export const selectCartItemsDetails = createSelector(
     selectCart,
     selectInventory,
     (cart, inventory) => {
@@ -16,8 +17,9 @@ export const cartItemsDetails = createSelector(
     }
 )
 
+// selector to calculate the total price of the cart
 export const cartTotal = createSelector(
-    cartItemsDetails,
+    selectCartItemsDetails,
     (cartItems) => {
         if (cartItems.length === 0) {
             return 0
