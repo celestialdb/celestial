@@ -25,15 +25,15 @@
 
 We will use the following very simple ToDo app to demonstrate the usage of the generated RTK definitions.  
 
-![ToDo App](/Users/kriti/celestial/ex/code-gen-test/docs/files/todo app.png)
+![ToDo App](./files/todo app.png)
 
 The app displays all the ToDos along with their status and colour codes. At the top, the user can submit a new todo.
 
-![ToDo App](/Users/kriti/celestial/ex/code-gen-test/docs/files/todo app color selection.png)
+![ToDo App](./files/todo app color selection.png)
 
 The user can mark a task as done (or undone) and can also select the color code of a task from a fixed selection.
 
-![ToDo App](/Users/kriti/celestial/ex/code-gen-test/docs/files/todo app filtering capabilities.png)
+![ToDo App](./files/todo app filtering capabilities.png)
 
 The app provides additional buttons (far left), a counter (mid-left) and filtering facilities based on status (mid-right) and color (far right).
 
