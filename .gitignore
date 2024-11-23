@@ -1,7 +1,7 @@
 package_old.json
 
 node_modules/*
-examples/todoApp/node_modules/*
+examples/todoApp/client/node_modules/*
 examples/jira_clone/.vscode/*
 examples/jira_clone/node_modules/*
 examples/shopping_cart/node_modules/*
@@ -17,3 +17,4 @@ package-lock.json
 examples/jira_clone/client/yarn.lock
 examples/shopping_cart/.idea/*
 examples/shopping_cart/client/src/react-app-env.d.ts
+examples/todoApp/client/src/react-app-env.d.ts

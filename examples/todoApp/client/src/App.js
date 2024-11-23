@@ -20,7 +20,7 @@ function App() {
     <div className="App">
       <nav>
         <section>
-          <h1>Queue with Redux</h1>
+          <h1>Example: celestial's RTK defs</h1>
         </section>
       </nav>
       <main>
