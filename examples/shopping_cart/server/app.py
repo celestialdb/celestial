@@ -139,8 +139,6 @@ def modify_cart(item_id, quantity, action):
 @app.route('/cart/<action>/<item_id>', methods=['PUT'])
 @cross_origin()
 def put_cart(action, item_id):
-    # get the task details from the request
-    print(action, item_id, request.get_json())
     if action == 'add' or action == 'remove':
         return modify_cart(item_id, request.get_json()['quantity'], action)
     else:
