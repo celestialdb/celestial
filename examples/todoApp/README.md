@@ -13,3 +13,4 @@ This is a very simple todo app to demonstrate the usage of celestial's RTK defin
 4. Start client with ```npm start```. App will be available at http://localhost:3000
 
 ## Generating RTK definitions
+`npx celestial ./open_api_spec.json ./client/src/celestial`

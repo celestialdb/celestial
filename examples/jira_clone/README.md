@@ -22,8 +22,5 @@ This is a simplified Jira clone, cloned from [oldboyxx/jira_clone](https://githu
 - `cd client && npm start` in another terminal tab
 - App should now be running on `http://localhost:8080/`
 
-## Running cypress end-to-end tests 🚥
-
-- Set up development environment
-- Create a database named `jira_test` and start the api with `cd api && npm run start:test`
-- `cd client && npm run test:cypress`
+## Generating RTK definitions
+`npx celestial ./openapispec.json ./client/src/celestial`

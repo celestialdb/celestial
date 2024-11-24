@@ -11,3 +11,6 @@ This is a very simple shopping cart demonstration with celestial's RTK definitio
 3. Start server with ```python3 app.py```
 3. Install client dependencies with ```npm install```
 4. Start client with ```npm start```. App will be available at http://localhost:3000
+
+## Generating RTK definitions
+`npx celestial ./openapispec.json ./client/src/celestial`

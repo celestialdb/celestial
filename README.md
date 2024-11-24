@@ -108,7 +108,7 @@ Add the following information to your Open API spec:
 * `x-celestial-index-endpoint-by-key`
 * `x-celestial-updateByKey`
 
-Read more [here]().
+Read more [here](https://github.com/celestialdb/celestial/blob/main/docs/README.md#annotate-openapi-spec).
 
 ## Generate RTK Definitions
 
@@ -147,7 +147,7 @@ const todo = useSelector(selectTasksById(id))
 const todoColor = useSelector(selectColorsById(todo.colorId))
 const allColors = useSelector(selectColors)
 ```
-> Notice the pattern between the name of query hooks and their corresponding endpoint. Read more [here]().
+> Notice the pattern between the name of query hooks and their corresponding endpoint. Read more [here](https://github.com/celestialdb/celestial/blob/main/docs/README.md#query--mutation-hooks).
 
 You don't have to write the data fetching code or handle failure cases. 
 
@@ -162,7 +162,7 @@ const [ addTask ] = usePostTasksMutation()
 // we call the mutation using arguments required by the POST endpoint
 addTask({newTask: {text: trimmedText}})
 ```
-> Notice the pattern between the name of mutation hook and the endpoint. Read more [here]().
+> Notice the pattern between the name of mutation hook and the endpoint. Read more [here](https://github.com/celestialdb/celestial/blob/main/docs/README.md#query--mutation-hooks).
 
 You don't have to write the code to update the backend. When the backend is updated, by default, everywhere this data is being used is updated as well, without you having to write refetch logic yourself.
 
@@ -192,4 +192,4 @@ cacheUpdate("stateVar1", ['a'])
 cacheUpdate("stateVar2", "newValue")
 ```
 
-You don't have to write your actions and reducers. Simply define your functions and add cacheUpdate at the end with the state var name and the key to update.
+You don't have to write your actions and reducers. Simply define your functions and add `cacheUpdate` at the end with the state var name and the key to update.

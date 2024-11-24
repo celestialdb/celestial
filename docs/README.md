@@ -36,9 +36,9 @@
 
 For each `GET` endpoint, a `usePlaceholderQuery()` hook is generated. Here, `Placeholder` is the camel-case of the **concatenation of the HTTP verb GET and the endpoint**.
 
-For ex., for `/tasks`, the hook will be `useGetTasksQuery()` and for `/issues/issue_id`, the hook will be `useGetIssuesByIssueIdQuery()`. See example [here]().
+For ex., for `/tasks`, the hook will be `useGetTasksQuery()` and for `/issues/issue_id`, the hook will be `useGetIssuesByIssueIdQuery()`. See example [here](https://github.com/celestialdb/celestial/blob/main/docs/Example.md#generated-query-hooks).
 
-For each of the `PUT`, `POST` and `DELETE` endpoints, a `usePlaceholderMutation()` hook is generated. See examples [here]().
+For each of the `PUT`, `POST` and `DELETE` endpoints, a `usePlaceholderMutation()` hook is generated. See examples [here](https://github.com/celestialdb/celestial/blob/main/docs/Example.md#generated-mutation-hooks).
 
 ## Default Selectors
 
@@ -243,7 +243,7 @@ const data = useSelector(selectCustomSelector)
 
 If you have called the hook in a previously loaded component, you can simply call the selectors without the hook.
 
-An example can be found [here]().
+An example can be found [here](https://github.com/celestialdb/celestial/blob/main/docs/Example.md#data-fetching-and-display).
 
 
 ## Performing mutations
@@ -262,7 +262,7 @@ const [updateCall] = usePlaceholderMutation()
 updateCall(...)
 ```
 
-An example can be found [here]().
+An example can be found [here](https://github.com/celestialdb/celestial/blob/main/docs/Example.md#performing-updates).
 
 
 
@@ -278,7 +278,7 @@ useCacheInit("stateVar1",[]);
 useCacheInit("stateVar2","stateVarVal");
 ```
 
-An example can be found [here]().
+An example can be found [here](https://github.com/celestialdb/celestial/blob/main/docs/Example.md#initializing-cache).
 
 **Step 2**: Access your state variables like so
 
@@ -289,7 +289,7 @@ import { selectCache } from "./celestial";
 const { stateVars } = useSelector(selectCache)
 ```
 
-An example can be found [here]().
+An example can be found [here](https://github.com/celestialdb/celestial/blob/main/docs/Example.md#accessing-cached-data).
 
 **Step 3**: Update your state variables like so
 
@@ -304,4 +304,4 @@ cacheUpdate("stateVar1", ['a'])
 cacheUpdate("stateVar2", "newValue")
 ```
 
-An example can be found [here]().
+An example can be found [here](https://github.com/celestialdb/celestial/blob/main/docs/Example.md#updating-cache).
