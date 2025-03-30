@@ -22,12 +22,12 @@
 
 1. Does not support RTK definitions for authentication endpoints or any other auth related capabilities such as auth headers.
 2. No support for pagination (yet).
-3. Optimistic updates are not supported for bulk update endpoints. Optimistic updates work only for modifying a single resource.
+<!--- 3. Optimistic updates are not supported for bulk update endpoints. Optimistic updates work only for modifying a single resource.
 4. Optimistic updates supported only on PUT, POST and DELETE endpoints.
 5. Optimistic update assumptions
    1. POST: contents of the request body are *inserted* into the cache at a placehold id
    2. PUT: contents of the request body are *upserted* into the cache at the provided id
-   3. DELETE: entity associated with provided id is *deleted* from cache. 
+   3. DELETE: entity associated with provided id is *deleted* from cache. --->
 
 
 # RTK Definitions Generated
@@ -106,7 +106,7 @@ First, annotate your open api spec with celestial related information
 * `tags`,*required, string[]*: This should be the same as the endpoint's `x-celestial-grouping`, only in array form. See [example 1](#example-1).
 * `x-celestial-index-endpoint`, *boolean*: This is where you define the endpoint that must be cached. One GET endpoint in each collection must have this set to true. This endpoint must have a primary key column called`id`. See [example 1](#example-1).
 * `x-celestial-index-endpoint-by-key`, *string*: This is where you define the key of the response JSON object where data to be cached will be present. By default, the entire response object will be cached. Only required for endpoints which have the `x-celestial-index-endpoint` set. See [example 1](#example-1).
-* `x-celestial-updateByKey`, *string*: When you perform an update, you send the primary key of the resource to update to the backend, along with other information. This is the location of the primary key of the resource being updated. If the primary key is present in `parameters`, specify `parameters.camelCase(primaryKey)`. If the primary key is present in the `requestBody`, specify `requestBody.primaryKey`. This must be the same as the `id` column returned by `x-celeted-index-endpoint`. Required for PUT and DELETE endpoints. See [example 2](#example-2).
+<!--- * `x-celestial-updateByKey`, *string*: When you perform an update, you send the primary key of the resource to update to the backend, along with other information. This is the location of the primary key of the resource being updated. If the primary key is present in `parameters`, specify `parameters.camelCase(primaryKey)`. If the primary key is present in the `requestBody`, specify `requestBody.primaryKey`. This must be the same as the `id` column returned by `x-celeted-index-endpoint`. Required for PUT and DELETE endpoints. See [example 2](#example-2). --->
 
 #### Example 1.
 
@@ -146,7 +146,7 @@ First, annotate your open api spec with celestial related information
 
 
 
-#### Example 2
+<!--- #### Example 2
 
 ```json
     "/cart/{action}": {
@@ -187,7 +187,8 @@ First, annotate your open api spec with celestial related information
         },
       }
     }
-```
+``` 
+--->
 
 
 

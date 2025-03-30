@@ -1,14 +1,10 @@
 <div align="center" padding=0px>
-<h1 padding=0px>celestial: $\mathbf{\mathbf{\mathbf{\textcolor{black}{Managed} \space \textcolor{#764abc}{Redux \space Toolkit}}}}$</h1>
-<!-- <h1 padding=0px>$\mathbf{\mathbf{\mathbf{\textcolor{black}{Managed} \space \textcolor{#764abc}{Redux \space Toolkit}}}}$</h1> -->
-<h2 padding=0px>$\mathbf{Auto-generate \space RTK \space definitions \space from \space your \space OpenAPI \space Spec}$</h2>
+<h1 padding=0px>CxAg</h1>
+<h2 padding=0px>$\mathbf{Generates \space RTK \space definitions \space from \space your \space OpenAPI \space Spec}$</h2>
 </div>
 
-Celestial generates RTK definitions for your backend with built-in support for caching and optimistic updates.
+CxAg generates the backend wiring required to connect your frontend to your backend, by generating hooks that wrap the fetch calls to your backend API. The hooks generated have built-in support for caching, duplicate request handling, request cancellation. 
 
-In other words, Celestial provides simple query and mutation hooks to interact with your backend with built-in support for caching and optimistic updates.
-
-You get to directly use query and mutation hooks without writing any of the logic:
 ```js
 // call the hooks
 useGetColorsQuery()
@@ -26,9 +22,7 @@ const [ addTask ] = usePostTasksMutation()
 // this will issue a POST on /tasks endpoint
 addTask({newTask: {text: "my new todo"}})
 ```
-All data fetched is cached by default, and all mutations are optimistic by default.
-
-Celestial also wraps away the complexity associated with state management. Managing local state is as simple as making function calls:
+CxAg also generates generic primitives for state management.
 ```js
 // initialize cache to manage local state
 useCacheInit("colors",[]);
@@ -40,10 +34,30 @@ const cacheUpdate = useCacheUpdate();
 const onStatusChange = (status) => {
     cacheUpdate("status", status)
 }
+
+// use local state
+const { status } = useSelector(selectCache)
 ```
 
+The data fetched from the backend and local state of the application are stored in the same state container, allowing you to combine data using the Selector primitive.
+
+```javascript
+// combine data fetched from backend with local state data
+export const selectCompletedTodoIds = createSelector(
+    selectTasks,
+  	selectCache,
+    (todos, cache) => Object.values(todos).filter((todo) => todo.status === cache.status.Completed).map((todo) => todo.id)
+)
+
+// use custom selector in component
+const completedTodoIds = useSelector(selectCompletedTodoIds)
+```
+
+
+
 ## On this page
-* [What is Celestial](#what-is-celestial)
+
+* [CxAg](#cxag)
 * [Acknowledgements](#acknowledgements)
 * [Code Samples](#code-samples)
   * [ToDo App](#todo-app)
@@ -59,24 +73,29 @@ const onStatusChange = (status) => {
   * [State Management](#state-management)
 
 
-# What is Celestial
+# CxAg
 
-[Redux Toolkit](https://github.com/reduxjs/redux-toolkit) provides a rich set of tools to build fast, snappy frontends. However, managing an in-house deployment is complex and requires expertise. Celestial gives you all the power of Redux Toolkit minus the hassle, making it simpler to build fast and snappy React apps.
+CxAG streamlines backend integration for your application by generating the necessary wiring code containing fetch calls to the API, error handling, etc.
 
-**By generating your RTK definitions, Celestial wraps away the complexity of Redux Toolkit, exposing an intuitive hook-based interface for declarative server interaction and simplified state management.**
+It is based on the [RTK](https://github.com/reduxjs/redux-toolkit) framework which provides rich tooling for a fast and snappy user experience, such as loading state management, duplicate fetch calls, caching, optimistic updates.
 
+While RTK is powerful, it can be complex and requires boilerplate code, presenting a learning curve. By generating your RTK definitions, CxAg abstracts away this complexity, providing an intuitive hook-based interface for declarative server interaction and simplified state management. 
 
-> * Auto-generated query and mutation hooks for your backend with built-in support for caching and optimistic update, and auto-syncing of client state with the server. 
-> * All the power of Redux minus the boiler-plate and learning curve. Throw in any kind of state, structured however you want and manipulate it by simply calling `updateCache(stateVar, stateVarNewVal)`. 
-> * Combine and tailor your data to your frontend models and access it via hook-based API. Derived state is cached and memoized by default. Changes to source state cascade down to the derived state including optimistic updates. 
-> * Celestial acts as a unified state container for your entire UI state, guaranteeing deterministic state transitions for a consistent, bug-free UX.
+Here's what you gain by using CxAG to generate your backend wiring:
 
 
-Think of Celestial as a unified data layer on the frontend that contains your entire UI state and manages sync with the backend. It exposes hook-based API for you to plug into and declaratively manage data flow throughout your app, giving you an easy DX and consistent UX.
+> * Query and mutation hooks with built-in support for caching and auto-syncing of client state with the server. 
+> * A unified container for your entire UI state, containing both the data fetched from backend and local application data.
+> * Simplified management of local application state.
+> * Combine and tailor the state data to your frontend models and access it via hook-based API.
+> *  Derived state is cached and memoized by default. Changes to source state cascade down to the derived state.
+> * Deterministic state transitions for a consistent, bug-free UX.
+
+
 
 # Acknowledgements
 
-Celestial relies heavily on Redux and its tooling. We extend our gratitude to the authors and maintainers for not only making these tools open source but also tirelessly tending the community since inception.
+CxAg wraps the tools provided by the RTK ecosystem. We extend our gratitude to the authors and maintainers for not only making these tools open source but also tirelessly tending the community since inception.
 
 
 # Code Samples
