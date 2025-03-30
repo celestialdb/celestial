@@ -1,6 +1,5 @@
 <div align="center" padding=0px>
-<h1 padding=0px>CxAg</h1>
-<h2 padding=0px>$\mathbf{Generates \space RTK \space definitions \space from \space your \space OpenAPI \space Spec}$</h2>
+<h1 padding=0px>CxAg: $\mathbf{Generates \space RTK \space definitions \space from \space your \space OpenAPI \space Spec}$</h1>
 </div>
 
 CxAg generates the backend wiring required to connect your frontend to your backend, by generating hooks that wrap the fetch calls to your backend API. The hooks generated have built-in support for caching, duplicate request handling, request cancellation. 
